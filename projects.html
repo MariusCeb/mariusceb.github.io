@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects — Ceban Marius</title>
+  <meta name="description" content="Selected work by Ceban Marius — 5 web projects including Donkey Joe, Uà Art&Pizza, Serenamente, Space Blog, and UniShare." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Projects — Ceban Marius" />
+  <meta property="og:description" content="Selected work — 5 web projects including Donkey Joe, Uà Art&Pizza, Serenamente, Space Blog, and UniShare." />
+  <meta property="og:site_name" content="Ceban Marius — Portfolio" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='monospace' font-size='14' font-weight='bold' fill='%23e8e6e1'%3Ecm%3C/text%3E%3C/svg%3E" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <script>
+    // Apply saved theme immediately — no flash
+    (function() {
+      const t = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:         #f0eeea;
+      --fg:         #111;
+      --muted:      #888;
+      --card-bg:    #e5e3df;
+      --card-hover: #dddbd7;
+      --border:     #d5d3cf;
+      --line:       #aaa;
+    }
+    [data-theme="dark"] {
+      --bg:         #0e0e0e;
+      --fg:         #e8e6e1;
+      --muted:      #888;
+      --card-bg:    #1a1a1a;
+      --card-hover: #222;
+      --border:     #2a2a2a;
+      --line:       #333;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'IBM Plex Mono', monospace;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* ── TOP BAR ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      z-index: 100;
+      transition: background 0.4s, border-color 0.4s;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+    .back-link {
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--fg); }
+    .back-link::before { content: '← '; }
+
+    .site-name {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--fg);
+    }
+    .site-name em { font-style: normal; font-weight: 300; color: var(--muted); }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .page-label {
+      font-size: 9px;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+    }
+
+    /* ── THEME TOGGLE ── */
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+    .toggle-track {
+      width: 32px; height: 18px;
+      border-radius: 9px;
+      border: 1px solid var(--line);
+      background: transparent;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+    .toggle-dot {
+      position: absolute;
+      top: 3px; left: 3px;
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--fg);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), background 0.3s;
+    }
+    [data-theme="dark"] .toggle-dot { transform: translateX(14px); }
+    .toggle-label {
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* ── MAIN ── */
+    main {
+      padding: 80px 32px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* ── PAGE TITLE ── */
+    .page-title {
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease 0.1s forwards;
+    }
+    .page-title h1 {
+      font-size: 48px;
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--fg);
+    }
+    .page-title p {
+      margin-top: 8px;
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+    }
+
+    /* ── GRID ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    /* ── PROJECT CARD ── */
+    .project-card {
+      background: var(--card-bg);
+      aspect-ratio: 4/3;
+      text-decoration: none;
+      color: var(--fg);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0;
+      transition: background 0.3s ease;
+    }
+    /* staggered fade in */
+    .project-card:nth-child(1) { animation: fadeUp 0.5s ease 0.2s forwards; }
+    .project-card:nth-child(2) { animation: fadeUp 0.5s ease 0.3s forwards; }
+    .project-card:nth-child(3) { animation: fadeUp 0.5s ease 0.4s forwards; }
+    .project-card:nth-child(4) { animation: fadeUp 0.5s ease 0.5s forwards; }
+    .project-card:nth-child(5) { animation: fadeUp 0.5s ease 0.6s forwards; }
+
+    .project-card:hover { background: var(--card-hover); }
+
+    /* image area */
+    .card-img {
+      position: absolute;
+      inset: 0;
+      background: var(--card-bg);
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.5s ease;
+    }
+    .project-card:hover .card-img {
+      transform: scale(1.04);
+    }
+
+    /* gradient overlay — sits above image, below text */
+    .card-gradient {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.78) 0%,
+        rgba(0,0,0,0.30) 55%,
+        rgba(0,0,0,0.06) 100%
+      );
+      z-index: 1;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover .card-gradient {
+      opacity: 0.85;
+    }
+
+    /* number top-right */
+    .card-num {
+      position: absolute;
+      top: 16px; right: 16px;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.55);
+      z-index: 2;
+    }
+
+    /* bottom info */
+    .card-info {
+      position: relative;
+      z-index: 2;
+    }
+    .card-tag {
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+    .card-title {
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1.3;
+      color: #fff;
+    }
+
+    /* hover arrow reveal */
+    .card-arrow {
+      position: absolute;
+      bottom: 20px; right: 20px;
+      font-size: 14px;
+      color: rgba(255,255,255,0.7);
+      opacity: 0;
+      transform: translate(-4px, 4px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      z-index: 2;
+    }
+    .project-card:hover .card-arrow {
+      opacity: 1;
+      transform: translate(0, 0);
+    }
+
+    /* ── FOOTER COUNT ── */
+    .projects-count {
+      margin-top: 24px;
+      font-size: 9px;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      opacity: 0;
+      animation: fadeUp 0.4s ease 0.7s forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══════════════════
+       MOBILE
+    ══════════════════ */
+    @media (max-width: 600px) {
+      header {
+        height: 44px;
+        padding: 0 16px;
+      }
+      .back-link { font-size: 10px; }
+      .site-name { display: none; }
+      .page-label { font-size: 9px; }
+
+      main { padding: 60px 12px 48px; }
+
+      .page-title { margin-bottom: 20px; }
+      .page-title h1 { font-size: 32px; }
+      .page-title p  { font-size: 9px; }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+      .project-card {
+        aspect-ratio: 16/9;
+        padding: 14px;
+      }
+      .card-title { font-size: 13px; }
+      .card-arrow { opacity: 1; transform: none; }
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    @media (hover: hover) and (pointer: fine) {
+      html, * { cursor: none !important; }
+    }
+    #cursor-dot {
+      position: fixed; left: 0; top: 0;
+      width: 4px; height: 4px;
+      background: var(--fg); border-radius: 50%;
+      pointer-events: none; z-index: 100000;
+      transform: translate(-50%,-50%);
+    }
+    #cursor-line {
+      position: fixed; left: 0; top: 0;
+      width: 1px; height: 22px;
+      background: var(--fg); opacity: 0.38;
+      pointer-events: none; z-index: 99999;
+      transform: translate(-50%,-50%);
+    }
+    .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; opacity: 0.035; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 200px 200px; }
+    /* ── CARD TILT ── */
+    .projects-grid { perspective: 1200px; }
+    .project-card { transition: background 0.3s ease; }
+  </style>
+</head>
+<body>
+  <div id="cursor-dot"></div>
+  <div id="cursor-line"></div>
+  <div id="pt-overlay" style="position:fixed;inset:0;z-index:99999;display:flex;overflow:hidden;pointer-events:none;background:#111;"></div>
+  <div class="noise-overlay"></div>
+
+  <header>
+    <div class="header-left">
+      <a href="index.html" data-nav class="back-link">HOME</a>
+      <span class="site-name">CEBAN MARIUS <em>__portfolio</em></span>
+    </div>
+    <div class="header-right">
+      <span class="page-label">_ PROJECTS</span>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <div class="toggle-track"><div class="toggle-dot"></div></div>
+        <span class="toggle-label" id="toggle-label">DARK</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <div class="page-title">
+      <h1>PROJECTS.</h1>
+      <p>SELECTED WORK</p>
+    </div>
+
+    <div class="projects-grid">
+
+      <!-- 01 — Donkey Joe -->
+      <a href="donkey.html" class="project-card" data-nav>
+        <div class="card-img" style="background-image: url('foto-projects/donkey.png');"></div>
+        <div class="card-gradient"></div>
+        <span class="card-num">01</span>
+        <div class="card-info">
+          <div class="card-tag">Web Design & Development</div>
+          <div class="card-title">Donkey Joe</div>
+        </div>
+        <span class="card-arrow">↗</span>
+      </a>
+
+      <!-- 02 — Uà Art&Pizza -->
+      <a href="pizzeria.html" class="project-card" data-nav>
+        <div class="card-img" style="background-image: url('foto-projects/pizzeria.png');"></div>
+        <div class="card-gradient"></div>
+        <span class="card-num">02</span>
+        <div class="card-info">
+          <div class="card-tag">Web Design & Development</div>
+          <div class="card-title">Uà Art&Pizza</div>
+        </div>
+        <span class="card-arrow">↗</span>
+      </a>
+
+      <!-- 03 — Serenamente -->
+      <a href="serenamente.html" class="project-card" data-nav>
+        <div class="card-img" style="background-image: url('foto-projects/serenamente.png');"></div>
+        <div class="card-gradient"></div>
+        <span class="card-num">03</span>
+        <div class="card-info">
+          <div class="card-tag">Web Design</div>
+          <div class="card-title">Serenamente</div>
+        </div>
+        <span class="card-arrow">↗</span>
+      </a>
+
+      <!-- 04 — Space Blog -->
+      <a href="SpaceBlog.html" class="project-card" data-nav>
+        <div class="card-img" style="background-image: url('foto-projects/SpaceBlog.png');"></div>
+        <div class="card-gradient"></div>
+        <span class="card-num">04</span>
+        <div class="card-info">
+          <div class="card-tag">Frontend Development</div>
+          <div class="card-title">Space Blog</div>
+        </div>
+        <span class="card-arrow">↗</span>
+      </a>
+
+      <!-- 05 — UniShare -->
+      <a href="unishare.html" class="project-card" data-nav>
+        <div class="card-img" style="background-image: url('foto-projects/unishare.png');"></div>
+        <div class="card-gradient"></div>
+        <span class="card-num">05</span>
+        <div class="card-info">
+          <div class="card-tag">Full Stack Development</div>
+          <div class="card-title">UniShare</div>
+        </div>
+        <span class="card-arrow">↗</span>
+      </a>
+
+    </div>
+
+    <div class="projects-count">05 PROJECTS</div>
+  </main>
+
+  <script>
+    // Read saved theme on load
+    (function() {
+      const saved = localStorage.getItem('theme') || 'light';
+      document.getElementById('toggle-label').textContent = saved === 'dark' ? 'LIGHT' : 'DARK';
+    })();
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.getElementById('toggle-label').textContent = isDark ? 'DARK' : 'LIGHT';
+    }
+  </script>
+
+  <script>
+    /* ── PAGE TRANSITION ── */
+    (function() {
+      var N = 14, STAGGER = 0.032, DUR = 0.46;
+      var overlay = document.getElementById('pt-overlay');
+      var blocks = [];
+      overlay.style.background = 'none';
+      for (var i = 0; i < N; i++) {
+        var b = document.createElement('div');
+        b.style.cssText = 'flex:1;height:100%;background:#111;transform:scaleX(1);transform-origin:right center;';
+        overlay.appendChild(b); blocks.push(b);
+      }
+      function init() {
+        setTimeout(function() {
+          blocks.forEach(function(b, i) {
+            b.style.transition = 'transform '+DUR+'s cubic-bezier(0.76,0,0.24,1) '+(i*STAGGER)+'s';
+            b.style.transform = 'scaleX(0)';
+          });
+          setTimeout(function() { overlay.style.pointerEvents = 'none'; }, (DUR+(N-1)*STAGGER)*1000+200);
+        }, 30);
+        document.querySelectorAll('[data-nav]').forEach(function(el) {
+          el.addEventListener('click', function(e) {
+            var href = this.getAttribute('href');
+            if (!href || href === '#') return;
+            e.preventDefault();
+            overlay.style.pointerEvents = 'all';
+            blocks.forEach(function(b, i) {
+              b.style.transformOrigin = 'left center';
+              b.style.transition = 'transform '+DUR+'s cubic-bezier(0.76,0,0.24,1) '+(i*STAGGER)+'s';
+              b.style.transform = 'scaleX(1)';
+            });
+            setTimeout(function() { window.location.href = href; }, (DUR+(N-1)*STAGGER)*1000-80);
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+    })();
+    /* ── CURSOR ── */
+    (function() {
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      var dot = document.getElementById('cursor-dot');
+      var line = document.getElementById('cursor-line');
+      if (!dot || !line) return;
+      var mx = -200, my = -200, lx = -200, ly = -200;
+      document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
+      var magnets = document.querySelectorAll('a, button');
+      (function tick() {
+        var tx = mx, ty = my;
+        for (var i = 0; i < magnets.length; i++) {
+          var r = magnets[i].getBoundingClientRect();
+          var cx = r.left + r.width * 0.5, cy = r.top + r.height * 0.5;
+          var d = Math.sqrt((mx-cx)*(mx-cx)+(my-cy)*(my-cy));
+          if (d < 80) { var s = (1-d/80)*0.28; tx += (cx-mx)*s; ty += (cy-my)*s; }
+        }
+        dot.style.left = tx+'px'; dot.style.top = ty+'px';
+        lx += (mx-lx)*0.12; ly += (my-ly)*0.12;
+        var angle = Math.atan2(my-ly, mx-lx)*180/Math.PI+90;
+        line.style.left = lx+'px'; line.style.top = ly+'px';
+        line.style.transform = 'translate(-50%,-50%) rotate('+angle+'deg)';
+        requestAnimationFrame(tick);
+      })();
+    })();
+    /* ── CARD TILT ── */
+    (function() {
+      document.querySelectorAll('.project-card').forEach(function(card) {
+        card.addEventListener('mousemove', function(e) {
+          this.style.transition = 'background 0.3s ease';
+          var r = this.getBoundingClientRect();
+          var x = (e.clientX - r.left) / r.width - 0.5;
+          var y = (e.clientY - r.top) / r.height - 0.5;
+          this.style.transform = 'rotateY('+(x*8)+'deg) rotateX('+(-y*8)+'deg) scale(1.015)';
+        });
+        card.addEventListener('mouseleave', function() {
+          this.style.transition = 'background 0.3s ease, transform 0.4s ease';
+          this.style.transform = '';
+        });
+      });
+    })();
+  </script>
+</body>
+</html>

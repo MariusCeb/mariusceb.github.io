@@ -39,15 +39,16 @@
     }
     #cursor-dot {
       position: fixed; left: 0; top: 0;
-      width: 4px; height: 4px;
+      width: 6px; height: 6px;
       background: var(--fg); border-radius: 50%;
       pointer-events: none; z-index: 100000;
       transform: translate(-50%,-50%);
+      box-shadow: 0 0 0 2px var(--bg);
     }
     #cursor-line {
       position: fixed; left: 0; top: 0;
-      width: 1px; height: 22px;
-      background: var(--fg); opacity: 0.38;
+      width: 1px; height: 26px;
+      background: var(--fg); opacity: 0.5;
       pointer-events: none; z-index: 99999;
       transform: translate(-50%,-50%);
     }
@@ -66,6 +67,9 @@
     .toggle-dot { position: absolute; top: 3px; left: 3px; width: 9px; height: 9px; border-radius: 50%; background: var(--fg); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), background 0.3s; }
     [data-theme="dark"] .toggle-dot { transform: translateX(13px); }
     .toggle-label { font-size: 9px; letter-spacing: 0.1em; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle { background: none; border: none; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: var(--muted); transition: color 0.2s; padding: 0; }
+    .lang-toggle:hover { color: var(--fg); }
 
     main { padding-top: 52px; }
 
@@ -183,69 +187,72 @@
 
   <header>
     <div class="header-left">
-      <a href="projects.html" class="back-link" data-nav>← PROJECTS</a>
-      <span class="breadcrumb">CEBAN MARIUS / PROJECTS / <span>SPACE BLOG</span></span>
+      <a href="projects.html" class="back-link" data-nav data-i18n="back.projects">← PROJECTS</a>
+      <span class="breadcrumb" data-i18n-html="sb.crumb">CEBAN MARIUS / PROJECTS / <span>SPACE BLOG</span></span>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-      <div class="toggle-track"><div class="toggle-dot"></div></div>
-      <span class="toggle-label" id="toggle-label">DARK</span>
-    </button>
+    <div class="header-right">
+      <button class="lang-toggle" onclick="toggleLang()" id="lang-toggle-label">IT</button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <div class="toggle-track"><div class="toggle-dot"></div></div>
+        <span class="toggle-label" id="toggle-label">DARK</span>
+      </button>
+    </div>
   </header>
 
   <main>
 
     <!-- HERO -->
     <div class="project-hero">
-      <div class="project-tag">04 — Frontend Development</div>
+      <div class="project-tag" data-i18n="sb.tag">04 — Frontend Development</div>
       <h1>Space Blog.</h1>
-      <p class="lead">A 3D z-axis tunnel navigation experiment — sections are stacked along the Z axis in CSS perspective space. Scrolling moves the camera forward through them, creating a "flying through space" effect with no libraries or frameworks.</p>
+      <p class="lead" data-i18n="sb.lead">A 3D z-axis tunnel navigation experiment — sections are stacked along the Z axis in CSS perspective space. Scrolling moves the camera forward through them, creating a "flying through space" effect with no libraries or frameworks.</p>
     </div>
 
     <!-- META -->
     <div class="project-meta">
       <div class="meta-item">
-        <div class="meta-label">Role</div>
-        <div class="meta-value">Developer</div>
+        <div class="meta-label" data-i18n="meta.role">Role</div>
+        <div class="meta-value" data-i18n="sb.role">Developer</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Year</div>
+        <div class="meta-label" data-i18n="meta.year">Year</div>
         <div class="meta-value">2024</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Stack</div>
+        <div class="meta-label" data-i18n="meta.stack">Stack</div>
         <div class="meta-value">Vanilla JS · CSS 3D Transforms · HTML</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Status</div>
-        <div class="meta-value">Prototype ↗</div>
+        <div class="meta-label" data-i18n="meta.status">Status</div>
+        <div class="meta-value" data-i18n="sb.status">Prototype ↗</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">GitHub</div>
-        <div class="meta-value"><a href="https://github.com/MariusCeb/spaceblog" class="meta-link" target="_blank">View Source ↗</a></div>
+        <div class="meta-label" data-i18n="meta.github">GitHub</div>
+        <div class="meta-value"><a href="https://github.com/MariusCeb/spaceblog" class="meta-link" target="_blank" data-i18n="meta.view_src">View Source ↗</a></div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Live Site</div>
-        <div class="meta-value"><a href="https://delicate-manatee-5326a7.netlify.app/" class="meta-link" target="_blank">Open Site ↗</a></div>
+        <div class="meta-label" data-i18n="meta.live">Live Site</div>
+        <div class="meta-value"><a href="https://mariusceb.github.io/spaceblog/" class="meta-link" target="_blank" data-i18n="meta.open_site">Open Site ↗</a></div>
       </div>
     </div>
 
     <!-- IMAGE STRIP -->
     <div class="image-strip">
-      <div class="strip-img"><img src="foto/spaceblog/welcome.png" alt="Space Blog welcome screen"></div>
+      <div class="strip-img"><img src="foto/spaceblog/welcome.png" alt="Space Blog welcome screen" loading="lazy"></div>
     </div>
 
     <!-- WHAT -->
     <div class="content-block">
-      <div class="section-label">What</div>
-      <p><strong>Space Blog is a browser-based 3D navigation experiment.</strong> Instead of the standard vertical page scroll, sections are positioned at fixed intervals along the Z axis using CSS <code>translateZ</code> — at 0, −1000px, −2000px, and −3000px respectively. A JavaScript scroll listener advances the <code>perspective</code> container's camera position, creating the illusion of flying through a tunnel in space.</p>
-      <p>The four sections contain: a hero title with Michroma monospace typeface, an image + text side-by-side content section, a vanilla JS image carousel, and a footer. Each section transitions smoothly with CSS easing on <code>transform</code> and <code>opacity</code> as it enters and exits the viewport.</p>
+      <div class="section-label" data-i18n="section.what">What</div>
+      <p data-i18n-html="sb.what.p1"><strong>Space Blog is a browser-based 3D navigation experiment.</strong> Instead of the standard vertical page scroll, sections are positioned at fixed intervals along the Z axis using CSS <code>translateZ</code> — at 0, −1000px, −2000px, and −3000px respectively. A JavaScript scroll listener advances the <code>perspective</code> container's camera position, creating the illusion of flying through a tunnel in space.</p>
+      <p data-i18n-html="sb.what.p2">The four sections contain: a hero title with Michroma monospace typeface, an image + text side-by-side content section, a vanilla JS image carousel, and a footer. Each section transitions smoothly with CSS easing on <code>transform</code> and <code>opacity</code> as it enters and exits the viewport.</p>
     </div>
 
     <!-- WHY -->
     <div class="content-block" style="padding-top: 0; border-top: none;">
-      <div class="section-label">Why</div>
-      <p>The goal was a pure CSS 3D challenge — no GSAP, no Three.js, no ScrollMagic. Could a convincing 3D page-travel effect be achieved using only browser-native perspective transforms and a handful of JavaScript lines?</p>
-      <p><strong>The constraint was the point.</strong> Understanding the browser's 3D rendering pipeline — stacking contexts, <code>transform-style: preserve-3d</code>, perspective origins, and the interaction between <code>overflow</code> and 3D — required reading the CSS spec rather than library docs.</p>
+      <div class="section-label" data-i18n="section.why">Why</div>
+      <p data-i18n="sb.why.p1">The goal was a pure CSS 3D challenge — no GSAP, no Three.js, no ScrollMagic. Could a convincing 3D page-travel effect be achieved using only browser-native perspective transforms and a handful of JavaScript lines?</p>
+      <p data-i18n-html="sb.why.p2"><strong>The constraint was the point.</strong> Understanding the browser's 3D rendering pipeline — stacking contexts, <code>transform-style: preserve-3d</code>, perspective origins, and the interaction between <code>overflow</code> and 3D — required reading the CSS spec rather than library docs.</p>
     </div>
 
     <div class="section-divider">· · · ◆ · · ·</div>
@@ -253,14 +260,14 @@
     <!-- FEATURE CARDS -->
     <div class="feature-cards">
       <div class="feature-card">
-        <div class="icon">🚀</div>
-        <h3>Z-Axis Perspective Navigation</h3>
-        <p>Sections are absolutely positioned at <code>translateZ(0)</code>, <code>translateZ(-1000px)</code>, <code>translateZ(-2000px)</code>, and <code>translateZ(-3000px)</code> within a container with <code>perspective: 1000px</code> and <code>transform-style: preserve-3d</code>. Scroll events update the container's Z-translation to move the camera forward. Each section box-shadows glow white for depth cueing.</p>
+        <div class="icon"></div>
+        <h3 data-i18n="sb.f1.ttl">Z-Axis Perspective Navigation</h3>
+        <p data-i18n-html="sb.f1.dsc">Sections are absolutely positioned at <code>translateZ(0)</code>, <code>translateZ(-1000px)</code>, <code>translateZ(-2000px)</code>, and <code>translateZ(-3000px)</code> within a container with <code>perspective: 1000px</code> and <code>transform-style: preserve-3d</code>. Scroll events update the container's Z-translation to move the camera forward. Each section box-shadows glow white for depth cueing.</p>
       </div>
       <div class="feature-card">
-        <div class="icon">🎠</div>
-        <h3>Vanilla JS Image Carousel</h3>
-        <p>Section 3 contains a custom carousel built without any library. The wrapper uses <code>display: flex</code> with <code>width: 300%</code> for three images. CSS <code>transition: transform</code> handles the slide animation. Previous/next buttons call a <code>moveSlide()</code> function that updates a current-index variable and translates the wrapper by multiples of <code>100% / numSlides</code>.</p>
+        <div class="icon"></div>
+        <h3 data-i18n="sb.f2.ttl">Vanilla JS Image Carousel</h3>
+        <p data-i18n-html="sb.f2.dsc">Section 3 contains a custom carousel built without any library. The wrapper uses <code>display: flex</code> with <code>width: 300%</code> for three images. CSS <code>transition: transform</code> handles the slide animation. Previous/next buttons call a <code>moveSlide()</code> function that updates a current-index variable and translates the wrapper by multiples of <code>100% / numSlides</code>.</p>
       </div>
     </div>
 
@@ -268,18 +275,18 @@
 
     <!-- OUTCOME -->
     <div class="outcome-block">
-      <div class="section-label">Outcome</div>
-      <h2>What shipped</h2>
-      <p>A working 4-section 3D tunnel: fixed navbar, hero section with large Michroma title, image + description section, image carousel section, and footer. Fully responsive with perspective values adapted at 1024px, 768px, and 480px breakpoints. The effect runs at smooth 60fps on desktop without any canvas or WebGL.</p>
-      <h2>What I learned</h2>
-      <p>CSS 3D effects are deceptively fragile. <strong>Any ancestor element with <code>overflow: hidden</code> collapses the 3D rendering context entirely</strong>, flattening all children. Similarly, <code>transform-style: preserve-3d</code> must be set on every element in the ancestor chain — not just the root container. These are the kinds of bugs that documentation glosses over but cost hours of debugging.</p>
+      <div class="section-label" data-i18n="section.outcome">Outcome</div>
+      <h2 data-i18n="outcome.h1">What shipped</h2>
+      <p data-i18n="sb.out.p1">A working 4-section 3D tunnel: fixed navbar, hero section with large Michroma title, image + description section, image carousel section, and footer. Fully responsive with perspective values adapted at 1024px, 768px, and 480px breakpoints. The effect runs at smooth 60fps on desktop without any canvas or WebGL.</p>
+      <h2 data-i18n="outcome.h2">What I learned</h2>
+      <p data-i18n-html="sb.out.p2">CSS 3D effects are deceptively fragile. <strong>Any ancestor element with <code>overflow: hidden</code> collapses the 3D rendering context entirely</strong>, flattening all children. Similarly, <code>transform-style: preserve-3d</code> must be set on every element in the ancestor chain — not just the root container. These are the kinds of bugs that documentation glosses over but cost hours of debugging.</p>
     </div>
 
     <!-- NEXT PROJECT -->
     <a href="unishare.html" class="next-project" data-nav>
       <div>
-        <div class="next-label">NEXT PROJECT</div>
-        <div class="next-title">UniShare →</div>
+        <div class="next-label" data-i18n="next.label">NEXT PROJECT</div>
+        <div class="next-title" data-i18n="sb.next">UniShare →</div>
       </div>
       <span class="next-arrow">↗</span>
     </a>
@@ -288,10 +295,11 @@
 
   <!-- LIGHTBOX -->
   <div id="lightbox" class="lightbox" onclick="if(event.target===this)closeLightbox()">
-    <button class="lightbox-close" onclick="closeLightbox()">✕ CLOSE</button>
+    <button class="lightbox-close" onclick="closeLightbox()" data-i18n="lightbox.close">✕ CLOSE</button>
     <img class="lightbox-img" id="lightboxImg" src="" alt="" />
   </div>
 
+  <script src="i18n.js"></script>
   <script>
     (function() {
       const saved = localStorage.getItem('theme') || 'light';
@@ -340,6 +348,18 @@
         });
       }
       if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+      window.addEventListener('pageshow', function(e) {
+        if (!e.persisted) return;
+        overlay.style.pointerEvents = 'all';
+        blocks.forEach(function(b) { b.style.transition = 'none'; b.style.transformOrigin = 'right center'; b.style.transform = 'scaleX(1)'; });
+        setTimeout(function() {
+          blocks.forEach(function(b, i) {
+            b.style.transition = 'transform '+DUR+'s cubic-bezier(0.76,0,0.24,1) '+(i*STAGGER)+'s';
+            b.style.transform = 'scaleX(0)';
+          });
+          setTimeout(function() { overlay.style.pointerEvents = 'none'; }, (DUR+(N-1)*STAGGER)*1000+200);
+        }, 50);
+      });
     })();
     /* ── CURSOR ── */
     (function() {
@@ -402,6 +422,6 @@
     })();
   </script>
 
-  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="back.top">↑ TOP</button>
 </body>
 </html>

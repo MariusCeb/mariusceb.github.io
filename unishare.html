@@ -63,15 +63,16 @@
     }
     #cursor-dot {
       position: fixed; left: 0; top: 0;
-      width: 4px; height: 4px;
+      width: 6px; height: 6px;
       background: var(--fg); border-radius: 50%;
       pointer-events: none; z-index: 100000;
       transform: translate(-50%,-50%);
+      box-shadow: 0 0 0 2px var(--bg);
     }
     #cursor-line {
       position: fixed; left: 0; top: 0;
-      width: 1px; height: 22px;
-      background: var(--fg); opacity: 0.38;
+      width: 1px; height: 26px;
+      background: var(--fg); opacity: 0.5;
       pointer-events: none; z-index: 99999;
       transform: translate(-50%,-50%);
     }
@@ -96,6 +97,9 @@
     .toggle-dot { position: absolute; top: 3px; left: 3px; width: 9px; height: 9px; border-radius: 50%; background: var(--fg); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), background 0.3s; }
     [data-theme="dark"] .toggle-dot { transform: translateX(13px); }
     .toggle-label { font-size: 9px; letter-spacing: 0.1em; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle { background: none; border: none; cursor: pointer; font-family: 'IBM Plex Mono', monospace; font-size: 9px; letter-spacing: 0.1em; color: var(--muted); transition: color 0.2s; padding: 0; }
+    .lang-toggle:hover { color: var(--fg); }
 
     /* ── MAIN ── */
     main { padding-top: 52px; }
@@ -321,80 +325,83 @@
 
   <header>
     <div class="header-left">
-      <a href="projects.html" class="back-link" data-nav>← PROJECTS</a>
-      <span class="breadcrumb">CEBAN MARIUS / PROJECTS / <span>UNISHARE</span></span>
+      <a href="projects.html" class="back-link" data-nav data-i18n="back.projects">← PROJECTS</a>
+      <span class="breadcrumb" data-i18n-html="us.crumb">CEBAN MARIUS / PROJECTS / <span>UNISHARE</span></span>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-      <div class="toggle-track"><div class="toggle-dot"></div></div>
-      <span class="toggle-label" id="toggle-label">DARK</span>
-    </button>
+    <div class="header-right">
+      <button class="lang-toggle" onclick="toggleLang()" id="lang-toggle-label">IT</button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <div class="toggle-track"><div class="toggle-dot"></div></div>
+        <span class="toggle-label" id="toggle-label">DARK</span>
+      </button>
+    </div>
   </header>
 
   <main>
 
     <!-- HERO -->
     <div class="project-hero">
-      <div class="project-tag">05 — Full Stack Development</div>
+      <div class="project-tag" data-i18n="us.tag">05 — Full Stack Development</div>
       <h1>UniShare.</h1>
-      <p class="lead">A university collaboration platform — virtual classrooms with invite codes, dual-type post system (free materials vs. paid tutoring), role-based access control, and a subscription layer with mock payment flow. Built with Laravel, React, and Inertia.js.</p>
+      <p class="lead" data-i18n="us.lead">A university collaboration platform — virtual classrooms with invite codes, dual-type post system (free materials vs. paid tutoring), role-based access control, and a subscription layer with mock payment flow. Built with Laravel, React, and Inertia.js.</p>
     </div>
 
     <!-- META -->
     <div class="project-meta">
       <div class="meta-item">
-        <div class="meta-label">Role</div>
-        <div class="meta-value">Full Stack Developer</div>
+        <div class="meta-label" data-i18n="meta.role">Role</div>
+        <div class="meta-value" data-i18n="us.role">Full Stack Developer</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Year</div>
+        <div class="meta-label" data-i18n="meta.year">Year</div>
         <div class="meta-value">2025</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Stack</div>
+        <div class="meta-label" data-i18n="meta.stack">Stack</div>
         <div class="meta-value">Laravel · React · TypeScript · Inertia.js · Tailwind CSS · SQLite</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Status</div>
-        <div class="meta-value">Portfolio Project ↗</div>
+        <div class="meta-label" data-i18n="meta.status">Status</div>
+        <div class="meta-value" data-i18n="us.status">Portfolio Project ↗</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">GitHub</div>
-        <div class="meta-value"><a href="#" class="meta-link" target="_blank">View Source ↗</a></div>
+        <div class="meta-label" data-i18n="meta.github">GitHub</div>
+        <div class="meta-value"><a href="#" class="meta-link" target="_blank" data-i18n="meta.view_src">View Source ↗</a></div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Live Site</div>
-        <div class="meta-value"><a href="#" class="meta-link" target="_blank">Open Site ↗</a></div>
+        <div class="meta-label" data-i18n="meta.live">Live Site</div>
+        <div class="meta-value"><a href="#" class="meta-link" target="_blank" data-i18n="meta.open_site">Open Site ↗</a></div>
       </div>
     </div>
 
     <!-- IMAGE STRIP -->
     <div class="image-strip">
-      <div class="strip-img"><img src="foto/unishare/hero.png" alt="UniShare hero"></div>
-      <div class="strip-img"><img src="foto/unishare/subsection.png" alt="UniShare subsection"></div>
-      <div class="strip-img"><img src="foto/unishare/footer.png" alt="UniShare footer"></div>
+      <div class="strip-img"><img src="foto/unishare/hero.png" alt="UniShare hero" loading="lazy"></div>
+      <div class="strip-img"><img src="foto/unishare/subsection.png" alt="UniShare subsection" loading="lazy"></div>
+      <div class="strip-img"><img src="foto/unishare/footer.png" alt="UniShare footer" loading="lazy"></div>
     </div>
 
     <!-- WHAT / WHY — split with sidebar photo -->
     <div class="content-split">
       <div class="content-split-left">
         <div class="content">
-          <div class="section-label">What</div>
-          <p><strong>UniShare is an academic resource-sharing and collaboration platform for university students.</strong> Its tagline — "Connetti, Collabora, Riuscisci" (Connect, Collaborate, Succeed) — captures the core loop: students join virtual classrooms via a 6-character invite code, then share study materials for free or find paid tutoring sessions posted by classroom admins.</p>
-          <p>The platform distinguishes between two user roles. Regular students can upload notes, PDFs, and files (up to 10MB) as free "Materiale Condiviso" posts. Classroom admins (teachers or tutors) can additionally post "Annunci a Pagamento" — priced announcements for paid sessions or premium materials. All posts are searchable by title/content and sortable by date or price.</p>
+          <div class="section-label" data-i18n="section.what">What</div>
+          <p data-i18n-html="us.what.p1"><strong>UniShare is an academic resource-sharing and collaboration platform for university students.</strong> Its tagline — "Connetti, Collabora, Riuscisci" (Connect, Collaborate, Succeed) — captures the core loop: students join virtual classrooms via a 6-character invite code, then share study materials for free or find paid tutoring sessions posted by classroom admins.</p>
+          <p data-i18n="us.what.p2">The platform distinguishes between two user roles. Regular students can upload notes, PDFs, and files (up to 10MB) as free "Materiale Condiviso" posts. Classroom admins (teachers or tutors) can additionally post "Annunci a Pagamento" — priced announcements for paid sessions or premium materials. All posts are searchable by title/content and sortable by date or price.</p>
         </div>
 
         <div class="section-divider">· · · ◆ · · ·</div>
 
         <div class="content" style="padding-top: 0;">
-          <div class="section-label">Why</div>
-          <p>Students typically rely on fragmented channels — WhatsApp groups, shared Google Drive folders, Telegram threads — to exchange materials. These scatter resources across multiple platforms with no structure, no search, and no authority system to distinguish reliable sources from noise.</p>
-          <p>UniShare centralizes this in one authenticated space. <strong>The invite-code classroom model mirrors how university courses actually work</strong> — a professor creates the room, students join, and materials flow in both directions. The subscription layer adds a monetization dimension, simulating how a real platform would sustain itself.</p>
+          <div class="section-label" data-i18n="section.why">Why</div>
+          <p data-i18n="us.why.p1">Students typically rely on fragmented channels — WhatsApp groups, shared Google Drive folders, Telegram threads — to exchange materials. These scatter resources across multiple platforms with no structure, no search, and no authority system to distinguish reliable sources from noise.</p>
+          <p data-i18n-html="us.why.p2">UniShare centralizes this in one authenticated space. <strong>The invite-code classroom model mirrors how university courses actually work</strong> — a professor creates the room, students join, and materials flow in both directions. The subscription layer adds a monetization dimension, simulating how a real platform would sustain itself.</p>
         </div>
       </div>
 
       <div class="content-split-right">
         <div class="sidebar-photo">
-          <img src="foto/unishare/login.png" alt="UniShare login">
+          <img src="foto/unishare/login.png" alt="UniShare login" loading="lazy">
         </div>
       </div>
     </div>
@@ -402,22 +409,22 @@
     <!-- FEATURE ROW 1: text left, image right -->
     <div class="feature-row">
       <div class="feature-text">
-        <h3>Classroom System</h3>
-        <p>Admins create virtual classrooms with a name and description. On creation, a unique 6-character alphanumeric join code is auto-generated. Users join by entering this code from the dashboard. Each classroom has its own post feed. Admins can edit or delete classrooms and posts via modal dialogs — non-admins can only view and create free posts.</p>
+        <h3 data-i18n="us.f1.ttl">Classroom System</h3>
+        <p data-i18n="us.f1.dsc">Admins create virtual classrooms with a name and description. On creation, a unique 6-character alphanumeric join code is auto-generated. Users join by entering this code from the dashboard. Each classroom has its own post feed. Admins can edit or delete classrooms and posts via modal dialogs — non-admins can only view and create free posts.</p>
       </div>
       <div class="feature-img">
-        <img src="foto/unishare/lobby.png" alt="UniShare lobby">
+        <img src="foto/unishare/lobby.png" alt="UniShare lobby" loading="lazy">
       </div>
     </div>
 
     <!-- FEATURE ROW 2: image left, text right -->
     <div class="feature-row">
       <div class="feature-img">
-        <img src="foto/unishare/analisi.png" alt="UniShare analisi">
+        <img src="foto/unishare/analisi.png" alt="UniShare analisi" loading="lazy">
       </div>
       <div class="feature-text">
-        <h3>Inertia.js Full Stack Bridge</h3>
-        <p>Rather than building a separate REST API, UniShare uses Inertia.js to pass server-rendered Laravel data directly as React component props. This eliminates the need for API routes, fetch calls, and client-side state management for server data — Laravel controllers return Inertia responses that hydrate React pages as if they were standard server-rendered views, but with SPA navigation.</p>
+        <h3 data-i18n="us.f2.ttl">Inertia.js Full Stack Bridge</h3>
+        <p data-i18n="us.f2.dsc">Rather than building a separate REST API, UniShare uses Inertia.js to pass server-rendered Laravel data directly as React component props. This eliminates the need for API routes, fetch calls, and client-side state management for server data — Laravel controllers return Inertia responses that hydrate React pages as if they were standard server-rendered views, but with SPA navigation.</p>
       </div>
     </div>
 
@@ -427,17 +434,17 @@
     <div class="outcome-section">
       <div class="outcome-content">
         <div class="content" style="padding-top: 48px; animation-delay: 0.6s;">
-          <div class="section-label">Outcome</div>
-          <h2>What shipped</h2>
-          <p>Full-stack application with: complete authentication system (login, register, password reset, email verification, profile settings), classroom CRUD with invite-code join flow, dual post type system with file uploads (stored via Laravel's disk abstraction), role-based access control via <code>isAdmin</code> flag, subscription middleware that gates access and redirects expired users to a mock payment page, CV validation loading screen, and a polished React marketing landing page with animated statistics using <code>react-countup</code> and IntersectionObserver scroll triggers.</p>
-          <h2>What I learned</h2>
-          <p>Inertia.js is a genuinely different mental model for full-stack development — <strong>it collapses the frontend/backend boundary without sacrificing either side.</strong> Laravel handles routing, auth, validation, and data — React handles rendering and interactivity — and Inertia connects them transparently. The result is less boilerplate than a traditional SPA with a separate API, and more reactivity than a classic server-rendered app. For solo projects at this scope, it's the right tool.</p>
+          <div class="section-label" data-i18n="section.outcome">Outcome</div>
+          <h2 data-i18n="outcome.h1">What shipped</h2>
+          <p data-i18n-html="us.out.p1">Full-stack application with: complete authentication system (login, register, password reset, email verification, profile settings), classroom CRUD with invite-code join flow, dual post type system with file uploads (stored via Laravel's disk abstraction), role-based access control via <code>isAdmin</code> flag, subscription middleware that gates access and redirects expired users to a mock payment page, CV validation loading screen, and a polished React marketing landing page with animated statistics using <code>react-countup</code> and IntersectionObserver scroll triggers.</p>
+          <h2 data-i18n="outcome.h2">What I learned</h2>
+          <p data-i18n-html="us.out.p2">Inertia.js is a genuinely different mental model for full-stack development — <strong>it collapses the frontend/backend boundary without sacrificing either side.</strong> Laravel handles routing, auth, validation, and data — React handles rendering and interactivity — and Inertia connects them transparently. The result is less boilerplate than a traditional SPA with a separate API, and more reactivity than a classic server-rendered app. For solo projects at this scope, it's the right tool.</p>
         </div>
       </div>
 
       <div class="outcome-photo-col">
         <div class="outcome-photo">
-          <img src="foto/unishare/phone-analisi.png" alt="UniShare mobile analisi">
+          <img src="foto/unishare/phone-analisi.png" alt="UniShare mobile analisi" loading="lazy">
         </div>
       </div>
     </div>
@@ -445,8 +452,8 @@
     <!-- NEXT PROJECT -->
     <a href="donkey.html" class="next-project" data-nav>
       <div>
-        <div class="next-label">NEXT PROJECT</div>
-        <div class="next-title">Donkey Joe →</div>
+        <div class="next-label" data-i18n="next.label">NEXT PROJECT</div>
+        <div class="next-title" data-i18n="us.next">Donkey Joe →</div>
       </div>
       <span class="next-arrow">↗</span>
     </a>
@@ -455,10 +462,11 @@
 
   <!-- LIGHTBOX -->
   <div id="lightbox" class="lightbox" onclick="if(event.target===this)closeLightbox()">
-    <button class="lightbox-close" onclick="closeLightbox()">✕ CLOSE</button>
+    <button class="lightbox-close" onclick="closeLightbox()" data-i18n="lightbox.close">✕ CLOSE</button>
     <img class="lightbox-img" id="lightboxImg" src="" alt="" />
   </div>
 
+  <script src="i18n.js"></script>
   <script>
     // Theme init
     (function() {
@@ -510,6 +518,18 @@
         });
       }
       if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+      window.addEventListener('pageshow', function(e) {
+        if (!e.persisted) return;
+        overlay.style.pointerEvents = 'all';
+        blocks.forEach(function(b) { b.style.transition = 'none'; b.style.transformOrigin = 'right center'; b.style.transform = 'scaleX(1)'; });
+        setTimeout(function() {
+          blocks.forEach(function(b, i) {
+            b.style.transition = 'transform '+DUR+'s cubic-bezier(0.76,0,0.24,1) '+(i*STAGGER)+'s';
+            b.style.transform = 'scaleX(0)';
+          });
+          setTimeout(function() { overlay.style.pointerEvents = 'none'; }, (DUR+(N-1)*STAGGER)*1000+200);
+        }, 50);
+      });
     })();
     /* ── CURSOR ── */
     (function() {
@@ -575,6 +595,6 @@
     })();
   </script>
 
-  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="back.top">↑ TOP</button>
 </body>
 </html>

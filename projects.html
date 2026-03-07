@@ -129,6 +129,13 @@
       color: var(--muted);
       font-family: 'IBM Plex Mono', monospace;
     }
+    .lang-toggle {
+      background: none; border: none; cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px; letter-spacing: 0.1em;
+      color: var(--muted); transition: color 0.2s; padding: 0;
+    }
+    .lang-toggle:hover { color: var(--fg); }
 
     /* ── MAIN ── */
     main {
@@ -315,15 +322,16 @@
     }
     #cursor-dot {
       position: fixed; left: 0; top: 0;
-      width: 4px; height: 4px;
+      width: 6px; height: 6px;
       background: var(--fg); border-radius: 50%;
       pointer-events: none; z-index: 100000;
       transform: translate(-50%,-50%);
+      box-shadow: 0 0 0 2px var(--bg);
     }
     #cursor-line {
       position: fixed; left: 0; top: 0;
-      width: 1px; height: 22px;
-      background: var(--fg); opacity: 0.38;
+      width: 1px; height: 26px;
+      background: var(--fg); opacity: 0.5;
       pointer-events: none; z-index: 99999;
       transform: translate(-50%,-50%);
     }
@@ -345,7 +353,8 @@
       <span class="site-name">CEBAN MARIUS <em>__portfolio</em></span>
     </div>
     <div class="header-right">
-      <span class="page-label">_ PROJECTS</span>
+      <span class="page-label" data-i18n="proj.pg.label">_ PROJECTS</span>
+      <button class="lang-toggle" onclick="toggleLang()" id="lang-toggle-label">IT</button>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
         <div class="toggle-track"><div class="toggle-dot"></div></div>
         <span class="toggle-label" id="toggle-label">DARK</span>
@@ -355,19 +364,19 @@
 
   <main>
     <div class="page-title">
-      <h1>PROJECTS.</h1>
-      <p>SELECTED WORK</p>
+      <h1 data-i18n="proj.h1">PROJECTS.</h1>
+      <p data-i18n="proj.subtitle">SELECTED WORK</p>
     </div>
 
     <div class="projects-grid">
 
       <!-- 01 — Donkey Joe -->
       <a href="donkey.html" class="project-card" data-nav>
-        <div class="card-img" style="background-image: url('foto-projects/donkey.png');"></div>
+        <div class="card-img" style="background-image: url('foto/thumbnails/donkey.png');"></div>
         <div class="card-gradient"></div>
         <span class="card-num">01</span>
         <div class="card-info">
-          <div class="card-tag">Web Design & Development</div>
+          <div class="card-tag" data-i18n="proj.c0.tag">Web Design & Development</div>
           <div class="card-title">Donkey Joe</div>
         </div>
         <span class="card-arrow">↗</span>
@@ -375,11 +384,11 @@
 
       <!-- 02 — Uà Art&Pizza -->
       <a href="pizzeria.html" class="project-card" data-nav>
-        <div class="card-img" style="background-image: url('foto-projects/pizzeria.png');"></div>
+        <div class="card-img" style="background-image: url('foto/thumbnails/pizzeria.png');"></div>
         <div class="card-gradient"></div>
         <span class="card-num">02</span>
         <div class="card-info">
-          <div class="card-tag">Web Design & Development</div>
+          <div class="card-tag" data-i18n="proj.c1.tag">Web Design & Development</div>
           <div class="card-title">Uà Art&Pizza</div>
         </div>
         <span class="card-arrow">↗</span>
@@ -387,11 +396,11 @@
 
       <!-- 03 — Serenamente -->
       <a href="serenamente.html" class="project-card" data-nav>
-        <div class="card-img" style="background-image: url('foto-projects/serenamente.png');"></div>
+        <div class="card-img" style="background-image: url('foto/thumbnails/serenamente.png');"></div>
         <div class="card-gradient"></div>
         <span class="card-num">03</span>
         <div class="card-info">
-          <div class="card-tag">Web Design</div>
+          <div class="card-tag" data-i18n="proj.c2.tag">Web Design</div>
           <div class="card-title">Serenamente</div>
         </div>
         <span class="card-arrow">↗</span>
@@ -399,11 +408,11 @@
 
       <!-- 04 — Space Blog -->
       <a href="SpaceBlog.html" class="project-card" data-nav>
-        <div class="card-img" style="background-image: url('foto-projects/SpaceBlog.png');"></div>
+        <div class="card-img" style="background-image: url('foto/thumbnails/SpaceBlog.png');"></div>
         <div class="card-gradient"></div>
         <span class="card-num">04</span>
         <div class="card-info">
-          <div class="card-tag">Frontend Development</div>
+          <div class="card-tag" data-i18n="proj.c3.tag">Frontend Development</div>
           <div class="card-title">Space Blog</div>
         </div>
         <span class="card-arrow">↗</span>
@@ -411,11 +420,11 @@
 
       <!-- 05 — UniShare -->
       <a href="unishare.html" class="project-card" data-nav>
-        <div class="card-img" style="background-image: url('foto-projects/unishare.png');"></div>
+        <div class="card-img" style="background-image: url('foto/thumbnails/unishare.png');"></div>
         <div class="card-gradient"></div>
         <span class="card-num">05</span>
         <div class="card-info">
-          <div class="card-tag">Full Stack Development</div>
+          <div class="card-tag" data-i18n="proj.c4.tag">Full Stack Development</div>
           <div class="card-title">UniShare</div>
         </div>
         <span class="card-arrow">↗</span>
@@ -423,9 +432,10 @@
 
     </div>
 
-    <div class="projects-count">05 PROJECTS</div>
+    <div class="projects-count" data-i18n="proj.count">05 PROJECTS</div>
   </main>
 
+  <script src="i18n.js"></script>
   <script>
     // Read saved theme on load
     (function() {
@@ -479,6 +489,18 @@
         });
       }
       if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+      window.addEventListener('pageshow', function(e) {
+        if (!e.persisted) return;
+        overlay.style.pointerEvents = 'all';
+        blocks.forEach(function(b) { b.style.transition = 'none'; b.style.transformOrigin = 'right center'; b.style.transform = 'scaleX(1)'; });
+        setTimeout(function() {
+          blocks.forEach(function(b, i) {
+            b.style.transition = 'transform '+DUR+'s cubic-bezier(0.76,0,0.24,1) '+(i*STAGGER)+'s';
+            b.style.transform = 'scaleX(0)';
+          });
+          setTimeout(function() { overlay.style.pointerEvents = 'none'; }, (DUR+(N-1)*STAGGER)*1000+200);
+        }, 50);
+      });
     })();
     /* ── CURSOR ── */
     (function() {

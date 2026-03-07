@@ -55,15 +55,16 @@
     }
     #cursor-dot {
       position: fixed; left: 0; top: 0;
-      width: 4px; height: 4px;
+      width: 6px; height: 6px;
       background: var(--fg); border-radius: 50%;
       pointer-events: none; z-index: 100000;
       transform: translate(-50%,-50%);
+      box-shadow: 0 0 0 2px var(--bg);
     }
     #cursor-line {
       position: fixed; left: 0; top: 0;
-      width: 1px; height: 22px;
-      background: var(--fg); opacity: 0.38;
+      width: 1px; height: 26px;
+      background: var(--fg); opacity: 0.5;
       pointer-events: none; z-index: 99999;
       transform: translate(-50%,-50%);
     }
@@ -121,6 +122,14 @@
       font-size: 9px; letter-spacing: 0.1em; color: var(--muted);
       font-family: 'IBM Plex Mono', monospace;
     }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: none; border: none; cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px; letter-spacing: 0.1em;
+      color: var(--muted); transition: color 0.2s; padding: 0;
+    }
+    .lang-toggle:hover { color: var(--fg); }
 
     /* ── MAIN ── */
     main { padding-top: 52px; }
@@ -368,6 +377,17 @@
     /* ── SCROLL REVEAL ── */
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.in-view { opacity: 1; transform: translateY(0); }
+    /* ── LIVE STATUS ── */
+    .status-live { display: inline-flex; align-items: center; gap: 7px; }
+    .status-dot-live {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #4caf50; flex-shrink: 0;
+      animation: pulse-green-live 2s ease-in-out infinite;
+    }
+    @keyframes pulse-green-live {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(76,175,80,0.5); }
+      50%       { box-shadow: 0 0 0 5px rgba(76,175,80,0); }
+    }
   </style>
 </head>
 <body>
@@ -380,57 +400,60 @@
 
   <header>
     <div class="header-left">
-      <a href="projects.html" class="back-link" data-nav>← PROJECTS</a>
-      <span class="breadcrumb">CEBAN MARIUS / PROJECTS / <span>DONKEY JOE</span></span>
+      <a href="projects.html" class="back-link" data-nav data-i18n="back.projects">← PROJECTS</a>
+      <span class="breadcrumb" data-i18n-html="dk.crumb">CEBAN MARIUS / PROJECTS / <span>DONKEY JOE</span></span>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-      <div class="toggle-track"><div class="toggle-dot"></div></div>
-      <span class="toggle-label" id="toggle-label">DARK</span>
-    </button>
+    <div class="header-right">
+      <button class="lang-toggle" onclick="toggleLang()" id="lang-toggle-label">IT</button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <div class="toggle-track"><div class="toggle-dot"></div></div>
+        <span class="toggle-label" id="toggle-label">DARK</span>
+      </button>
+    </div>
   </header>
 
   <main>
 
     <!-- HERO -->
     <div class="project-hero">
-      <div class="project-tag">01 — Web Design &amp; Development</div>
+      <div class="project-tag" data-i18n="dk.tag">01 — Web Design &amp; Development</div>
       <h1>Donkey Joe.</h1>
-      <p class="lead">An animated web experience for a bar &amp; music venue in Ravenna — canvas-rendered animated backgrounds, explosive letter intro animations, and an interactive jukebox system for live event nights.</p>
+      <p class="lead" data-i18n="dk.lead">An animated web experience for a bar &amp; music venue in Ravenna — canvas-rendered animated backgrounds, explosive letter intro animations, and an interactive jukebox system for live event nights.</p>
     </div>
 
     <!-- META -->
     <div class="project-meta">
       <div class="meta-item">
-        <div class="meta-label">Role</div>
-        <div class="meta-value">Designer &amp; Developer</div>
+        <div class="meta-label" data-i18n="meta.role">Role</div>
+        <div class="meta-value" data-i18n="dk.role">Designer &amp; Developer</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Year</div>
+        <div class="meta-label" data-i18n="meta.year">Year</div>
         <div class="meta-value">2025</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Stack</div>
+        <div class="meta-label" data-i18n="meta.stack">Stack</div>
         <div class="meta-value">Vanilla JS, Canvas API, HTML/CSS</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Status</div>
-        <div class="meta-value">Live ↗</div>
+        <div class="meta-label" data-i18n="meta.status">Status</div>
+        <div class="meta-value"><span class="status-live"><span class="status-dot-live"></span>LIVE</span></div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">GitHub</div>
-        <div class="meta-value"><a href="https://github.com/MariusCeb/donkey-joe" class="meta-link" target="_blank">View Source ↗</a></div>
+        <div class="meta-label" data-i18n="meta.github">GitHub</div>
+        <div class="meta-value"><a href="https://github.com/MariusCeb/donkey-joe" class="meta-link" target="_blank" data-i18n="meta.view_src">View Source ↗</a></div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Live Site</div>
-        <div class="meta-value"><a href="https://donkey-joe-production.up.railway.app/" class="meta-link" target="_blank">Open Site ↗</a></div>
+        <div class="meta-label" data-i18n="meta.live">Live Site</div>
+        <div class="meta-value"><a href="https://donkey-joe-production.up.railway.app/" class="meta-link" target="_blank" data-i18n="meta.open_site">Open Site ↗</a></div>
       </div>
     </div>
 
     <!-- IMAGE STRIP — add screenshots here -->
     <div class="image-strip">
-      <div class="strip-img" ><img src="foto/donkey/home.png" alt="photo"></div>
-      <div class="strip-img"><img src="foto/donkey/menu.png" alt="photo"></div>
-      <div class="strip-img"><img src="foto/donkey/musica.png" alt="photo"></div>
+      <div class="strip-img" ><img src="foto/donkey/home.png" alt="photo" loading="lazy"></div>
+      <div class="strip-img"><img src="foto/donkey/menu.png" alt="photo" loading="lazy"></div>
+      <div class="strip-img"><img src="foto/donkey/musica.png" alt="photo" loading="lazy"></div>
 
     </div>
 
@@ -440,23 +463,23 @@
 
         <!-- WHAT -->
         <div class="content">
-          <div class="section-label">What</div>
-          <p><strong>Donkey Joe is a full web experience for a bar and music venue at Via Argirocastro 26, Ravenna.</strong> The site opens with a cinematic animated intro sequence — the venue name explodes onto screen letter by letter from different directions — before fading into the main navigation UI.</p>
-          <p>Once the intro completes, users land on a dark, atmospheric interface with three main routes: the food &amp; drink menu, upcoming events, and opening hours &amp; contacts. A jukebox button lets patrons queue their song of the night during live events.</p>
+          <div class="section-label" data-i18n="section.what">What</div>
+          <p data-i18n-html="dk.what.p1"><strong>Donkey Joe is a full web experience for a bar and music venue at Via Argirocastro 26, Ravenna.</strong> The site opens with a cinematic animated intro sequence — the venue name explodes onto screen letter by letter from different directions — before fading into the main navigation UI.</p>
+          <p data-i18n="dk.what.p2">Once the intro completes, users land on a dark, atmospheric interface with three main routes: the food &amp; drink menu, upcoming events, and opening hours &amp; contacts. A jukebox button lets patrons queue their song of the night during live events.</p>
         </div>
 
         <div class="section-divider">· · · ◆ · · ·</div>
 
         <!-- WHY -->
         <div class="content" style="padding-top: 0; animation-delay: 0.5s;">
-          <div class="section-label">Why</div>
-          <p>The venue had no digital presence. Standard templates felt generic for a bar with this much identity — striped walls, deep reds, low-lit atmosphere. The site needed to feel like walking through the door, not browsing a listing.</p>
-          <p>The brief was clear: <strong>build something that captures the energy of the place the moment you open it.</strong> That meant animation-first design, not an afterthought.</p>
+          <div class="section-label" data-i18n="section.why">Why</div>
+          <p data-i18n="dk.why.p1">The venue had no digital presence. Standard templates felt generic for a bar with this much identity — striped walls, deep reds, low-lit atmosphere. The site needed to feel like walking through the door, not browsing a listing.</p>
+          <p data-i18n-html="dk.why.p2">The brief was clear: <strong>build something that captures the energy of the place the moment you open it.</strong> That meant animation-first design, not an afterthought.</p>
         </div>
 
       </div>
       <div class="content-split-right">
-        <div class="split-photo split-photo--portrait"><img src="foto/donkey/phone-index.png" alt="photo"></div>
+        <div class="split-photo split-photo--portrait"><img src="foto/donkey/phone-index.png" alt="photo" loading="lazy"></div>
       </div>
     </div>
 
@@ -464,19 +487,19 @@
     <div class="feature-row">
       <div class="feature-text">
         <div class="feature-icon"></div>
-        <h3>Animated Canvas Background</h3>
-        <p>Vertical striped bands — black, deep red, and antracite grey — are rendered on a Canvas element. Each stripe has independent sinusoidal oscillation: two overlapping frequencies control lateral swing, and a slower pulse controls thickness. Colors are sampled pixel-by-pixel from the venue's real branding imagery.</p>
+        <h3 data-i18n="dk.f1.ttl">Animated Canvas Background</h3>
+        <p data-i18n="dk.f1.dsc">Vertical striped bands — black, deep red, and antracite grey — are rendered on a Canvas element. Each stripe has independent sinusoidal oscillation: two overlapping frequencies control lateral swing, and a slower pulse controls thickness. Colors are sampled pixel-by-pixel from the venue's real branding imagery.</p>
       </div>
-      <div class="feature-img"><img src="foto/donkey/canvas.png" alt="photo"></div>
+      <div class="feature-img"><img src="foto/donkey/canvas.png" alt="photo" loading="lazy"></div>
     </div>
 
     <!-- FEATURE ROW 2 (flipped) -->
     <div class="feature-row" style="animation-delay: 0.55s;">
-      <div class="feature-img"><img src="foto/donkey/explosive.png " alt="photo"></div>
+      <div class="feature-img"><img src="foto/donkey/explosive.png" alt="photo" loading="lazy"></div>
       <div class="feature-text">
         <div class="feature-icon"></div>
-        <h3>Explosive Letter Intro</h3>
-        <p>Each letter of "DONKEY JOE" enters from a unique direction — top-left, directly above, top-right — using CSS custom properties set per-letter at runtime. After a short hold, they explode outward in reverse, and the main UI slides in. The whole sequence runs in under 3 seconds with no library dependencies.</p>
+        <h3 data-i18n="dk.f2.ttl">Explosive Letter Intro</h3>
+        <p data-i18n="dk.f2.dsc">Each letter of "DONKEY JOE" enters from a unique direction — top-left, directly above, top-right — using CSS custom properties set per-letter at runtime. After a short hold, they explode outward in reverse, and the main UI slides in. The whole sequence runs in under 3 seconds with no library dependencies.</p>
       </div>
     </div>
 
@@ -485,22 +508,22 @@
     <!-- OUTCOME -->
     <div class="outcome-split">
       <div class="content" style="padding-top: 0; animation-delay: 0.6s;">
-      <div class="section-label">Outcome</div>
-      <h2>What shipped</h2>
-      <p>A complete, production-ready site: main landing with animated intro, food &amp; drink menu page, events archive, contacts &amp; hours section, and a Jukebox feature (separate page) where patrons can browse and queue songs live during event nights. Fully responsive — mobile layout collapses to a large-button grid for fast venue-floor use.</p>
-      <h2>What I learned</h2>
-      <p>Recreating brand assets in code demands obsessive precision — I measured stripe proportions and sampled colors directly from the physical venue photography. I also learned that <strong>Canvas-based animation has hidden performance traps</strong>: clearing the entire canvas each frame at high refresh rates, and replicating stripes 3× to handle wide viewports without seams, required careful profiling.</p>
+      <div class="section-label" data-i18n="section.outcome">Outcome</div>
+      <h2 data-i18n="outcome.h1">What shipped</h2>
+      <p data-i18n="dk.out.p1">A complete, production-ready site: main landing with animated intro, food &amp; drink menu page, events archive, contacts &amp; hours section, and a Jukebox feature (separate page) where patrons can browse and queue songs live during event nights. Fully responsive — mobile layout collapses to a large-button grid for fast venue-floor use.</p>
+      <h2 data-i18n="outcome.h2">What I learned</h2>
+      <p data-i18n-html="dk.out.p2">Recreating brand assets in code demands obsessive precision — I measured stripe proportions and sampled colors directly from the physical venue photography. I also learned that <strong>Canvas-based animation has hidden performance traps</strong>: clearing the entire canvas each frame at high refresh rates, and replicating stripes 3× to handle wide viewports without seams, required careful profiling.</p>
       </div>
       <div class="outcome-right">
-        <div class="split-photo split-photo--portrait"><img src="foto/donkey/orari.png " alt="photo"></div>
+        <div class="split-photo split-photo--portrait"><img src="foto/donkey/orari.png" alt="photo" loading="lazy"></div>
       </div>
     </div>
 
     <!-- NEXT PROJECT -->
     <a href="pizzeria.html" class="next-project" data-nav>
       <div>
-        <div class="next-label">NEXT PROJECT</div>
-        <div class="next-title">Uà Art&amp;Pizza →</div>
+        <div class="next-label" data-i18n="next.label">NEXT PROJECT</div>
+        <div class="next-title" data-i18n="dk.next">Uà Art&amp;Pizza →</div>
       </div>
       <span class="next-arrow">↗</span>
     </a>
@@ -509,10 +532,11 @@
 
   <!-- LIGHTBOX -->
   <div id="lightbox" class="lightbox" onclick="if(event.target===this)closeLightbox()">
-    <button class="lightbox-close" onclick="closeLightbox()">✕ CLOSE</button>
+    <button class="lightbox-close" onclick="closeLightbox()" data-i18n="lightbox.close">✕ CLOSE</button>
     <img class="lightbox-img" id="lightboxImg" src="" alt="" />
   </div>
 
+  <script src="i18n.js"></script>
   <script>
     (function() {
       const saved = localStorage.getItem('theme') || 'light';
@@ -563,6 +587,18 @@
         });
       }
       if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+      window.addEventListener('pageshow', function(e) {
+        if (!e.persisted) return;
+        overlay.style.pointerEvents = 'all';
+        blocks.forEach(function(b) { b.style.transition = 'none'; b.style.transformOrigin = 'right center'; b.style.transform = 'scaleX(1)'; });
+        setTimeout(function() {
+          blocks.forEach(function(b, i) {
+            b.style.transition = 'transform '+DUR+'s cubic-bezier(0.76,0,0.24,1) '+(i*STAGGER)+'s';
+            b.style.transform = 'scaleX(0)';
+          });
+          setTimeout(function() { overlay.style.pointerEvents = 'none'; }, (DUR+(N-1)*STAGGER)*1000+200);
+        }, 50);
+      });
     })();
     /* ── CURSOR ── */
     (function() {
@@ -629,6 +665,6 @@
     })();
   </script>
 
-  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="back.top">↑ TOP</button>
 </body>
 </html>

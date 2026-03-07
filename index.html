@@ -57,19 +57,33 @@
     }
     #cursor-dot {
       position: fixed; left: 0; top: 0;
-      width: 4px; height: 4px;
+      width: 6px; height: 6px;
       background: var(--fg); border-radius: 50%;
       pointer-events: none; z-index: 100000;
       transform: translate(-50%,-50%);
+      box-shadow: 0 0 0 2px var(--bg);
     }
     #cursor-line {
       position: fixed; left: 0; top: 0;
-      width: 1px; height: 22px;
-      background: var(--fg); opacity: 0.38;
+      width: 1px; height: 26px;
+      background: var(--fg); opacity: 0.5;
       pointer-events: none; z-index: 99999;
       transform: translate(-50%,-50%);
     }
 
+    .lang-toggle {
+      position: fixed; top: 26px; right: 120px; z-index: 300;
+      background: none; border: none; cursor: pointer;
+      opacity: 0; animation: fadeIn 0.5s ease 2.2s forwards;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 9px; letter-spacing: 0.1em;
+      color: var(--muted); transition: color 0.2s;
+      padding: 0;
+    }
+    .lang-toggle:hover { color: var(--fg); }
+    @media (max-width: 600px) {
+      .lang-toggle { top: 22px; right: 103px; animation: none; opacity: 1; }
+    }
     .theme-toggle {
       position: fixed; top: 22px; right: 28px; z-index: 300;
       background: none; border: none; cursor: pointer;
@@ -148,12 +162,74 @@
       stroke-linecap: round; stroke-linejoin: round; transition: stroke 0.4s;
       opacity: 0.55;
     }
-    #path1 { stroke-dasharray: 2200; stroke-dashoffset: 2200; animation: draw 1.8s cubic-bezier(0.4,0,0.2,1) 0.05s forwards; }
-    #path2 { stroke-dasharray: 2200; stroke-dashoffset: 2200; animation: draw 1.8s cubic-bezier(0.4,0,0.2,1) 0.25s forwards; }
-    #path3 { stroke-dasharray: 1600; stroke-dashoffset: 1600; animation: draw 1.6s cubic-bezier(0.4,0,0.2,1) 0.4s forwards; }
-    #path4 { stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: draw 1.4s cubic-bezier(0.4,0,0.2,1) 0.55s forwards; }
-    #path5 { stroke-dasharray: 900;  stroke-dashoffset: 900;  animation: draw 1.2s cubic-bezier(0.4,0,0.2,1) 0.65s forwards; }
+    #path1 { stroke-dasharray: 2200; stroke-dashoffset: 2200; animation: draw 1.8s cubic-bezier(0.4,0,0.2,1) 0.05s forwards, line-breathe 7s ease-in-out 2.5s infinite; }
+    #path2 { stroke-dasharray: 2200; stroke-dashoffset: 2200; animation: draw 1.8s cubic-bezier(0.4,0,0.2,1) 0.25s forwards, line-breathe 7s ease-in-out 3.1s infinite; }
+    #path3 { stroke-dasharray: 1600; stroke-dashoffset: 1600; animation: draw 1.6s cubic-bezier(0.4,0,0.2,1) 0.4s  forwards, line-breathe-thin 9s ease-in-out 2.7s infinite; }
+    #path4 { stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: draw 1.4s cubic-bezier(0.4,0,0.2,1) 0.55s forwards, line-breathe-thin 6s ease-in-out 3.3s infinite; }
+    #path5 { stroke-dasharray: 900;  stroke-dashoffset: 900;  animation: draw 1.2s cubic-bezier(0.4,0,0.2,1) 0.65s forwards, line-breathe-thin 8s ease-in-out 2.4s infinite; }
     @keyframes draw { to { stroke-dashoffset: 0; } }
+    @keyframes line-breathe {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.28; }
+    }
+    @keyframes line-breathe-thin {
+      0%, 100% { opacity: 0.55; }
+      50%       { opacity: 0.1; }
+    }
+
+    /* ── LINE FLOW ── */
+    .flow-path {
+      fill: none; stroke: var(--fg); stroke-linecap: round;
+      pointer-events: none;
+      filter: drop-shadow(0 0 3px var(--fg));
+      transition: stroke 0.4s, filter 0.4s;
+    }
+    .flow-path-thin {
+      fill: none; stroke: var(--fg); stroke-linecap: round;
+      pointer-events: none;
+      filter: drop-shadow(0 0 2px var(--fg));
+      transition: stroke 0.4s, filter 0.4s;
+    }
+    #fp1 { stroke-width: 1.6; stroke-dasharray: 100 2300; animation: flow1 5.5s ease-in-out 2.3s infinite backwards; }
+    #fp2 { stroke-width: 1.6; stroke-dasharray: 100 2300; animation: flow2 7.0s ease-in-out 4.8s infinite backwards; }
+    #fp3 { stroke-width: 0.7; stroke-dasharray:  70 1670; animation: flow3 5.0s ease-in-out 3.2s infinite backwards; }
+    #fp4 { stroke-width: 0.7; stroke-dasharray:  70 1270; animation: flow4 4.5s ease-in-out 6.0s infinite backwards; }
+    #fp5 { stroke-width: 0.7; stroke-dasharray:  55  955; animation: flow5 4.0s ease-in-out 3.7s infinite backwards; }
+    @keyframes flow1 {
+      0%  { stroke-dashoffset:  100; opacity: 0; }
+      4%  { opacity: 1; }
+      28% { opacity: 1; }
+      32% { stroke-dashoffset: -2200; opacity: 0; }
+      100%{ stroke-dashoffset: -2200; opacity: 0; }
+    }
+    @keyframes flow2 {
+      0%  { stroke-dashoffset:  100; opacity: 0; }
+      4%  { opacity: 1; }
+      24% { opacity: 1; }
+      28% { stroke-dashoffset: -2200; opacity: 0; }
+      100%{ stroke-dashoffset: -2200; opacity: 0; }
+    }
+    @keyframes flow3 {
+      0%  { stroke-dashoffset:  70; opacity: 0; }
+      5%  { opacity: 0.65; }
+      28% { opacity: 0.65; }
+      33% { stroke-dashoffset: -1600; opacity: 0; }
+      100%{ stroke-dashoffset: -1600; opacity: 0; }
+    }
+    @keyframes flow4 {
+      0%  { stroke-dashoffset:  70; opacity: 0; }
+      5%  { opacity: 0.65; }
+      28% { opacity: 0.65; }
+      33% { stroke-dashoffset: -1200; opacity: 0; }
+      100%{ stroke-dashoffset: -1200; opacity: 0; }
+    }
+    @keyframes flow5 {
+      0%  { stroke-dashoffset:  55; opacity: 0; }
+      5%  { opacity: 0.65; }
+      28% { opacity: 0.65; }
+      33% { stroke-dashoffset: -900; opacity: 0; }
+      100%{ stroke-dashoffset: -900; opacity: 0; }
+    }
 
     .contact-panel {
       position: fixed; bottom: 0; right: 0; width: 480px;
@@ -204,7 +280,7 @@
         margin-top: 28px; width: 80px; height: 80px; border-radius: 50%;
         overflow: hidden; opacity: 0; animation: fadeIn 0.5s ease 0.8s forwards; flex-shrink: 0;
       }
-      .m-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+      .m-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 100%; }
       .m-links { margin-top: auto; display: flex; flex-direction: column; }
       .m-link {
         display: flex; align-items: center; justify-content: space-between;
@@ -234,6 +310,43 @@
       .m-ml2 { stroke-dasharray: 1200; stroke-dashoffset: 1200; animation: draw 1.6s cubic-bezier(0.4,0,0.2,1) 0.55s forwards; }
       .m-ml3 { stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: draw 1.4s cubic-bezier(0.4,0,0.2,1) 0.65s forwards; }
       @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      /* ── MOBILE LINE FLOW ── */
+      .m-flow-path {
+        fill: none; stroke: var(--fg); stroke-linecap: round;
+        pointer-events: none;
+        filter: drop-shadow(0 0 3px var(--fg));
+        transition: stroke 0.4s, filter 0.4s;
+      }
+      .m-flow-path-thin {
+        fill: none; stroke: var(--fg); stroke-linecap: round;
+        pointer-events: none;
+        filter: drop-shadow(0 0 2px var(--fg));
+        transition: stroke 0.4s, filter 0.4s;
+      }
+      #mfp1 { stroke-width: 1.6; stroke-dasharray: 80 1400; animation: mflow1 4.5s ease-in-out 2.3s infinite backwards; }
+      #mfp2 { stroke-width: 0.7; stroke-dasharray: 60 1200; animation: mflow2 5.0s ease-in-out 3.8s infinite backwards; }
+      #mfp3 { stroke-width: 0.7; stroke-dasharray: 55 1000; animation: mflow3 4.0s ease-in-out 3.0s infinite backwards; }
+      @keyframes mflow1 {
+        0%  { stroke-dashoffset:  80; opacity: 0; }
+        4%  { opacity: 1; }
+        28% { opacity: 1; }
+        32% { stroke-dashoffset: -1400; opacity: 0; }
+        100%{ stroke-dashoffset: -1400; opacity: 0; }
+      }
+      @keyframes mflow2 {
+        0%  { stroke-dashoffset:  60; opacity: 0; }
+        5%  { opacity: 0.65; }
+        28% { opacity: 0.65; }
+        33% { stroke-dashoffset: -1200; opacity: 0; }
+        100%{ stroke-dashoffset: -1200; opacity: 0; }
+      }
+      @keyframes mflow3 {
+        0%  { stroke-dashoffset:  55; opacity: 0; }
+        5%  { opacity: 0.65; }
+        28% { opacity: 0.65; }
+        33% { stroke-dashoffset: -1000; opacity: 0; }
+        100%{ stroke-dashoffset: -1000; opacity: 0; }
+      }
     }
     .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; opacity: 0.035; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 200px 200px; }
     /* ── AVAILABLE BADGE ── */
@@ -273,6 +386,8 @@
   <div id="pt-overlay" style="position:fixed;inset:0;z-index:99999;display:flex;overflow:hidden;pointer-events:none;background:#111;"></div>
   <div class="noise-overlay"></div>
 
+  <button class="lang-toggle" onclick="toggleLang()" aria-label="Switch language" id="lang-toggle-label">IT</button>
+
   <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
     <div class="toggle-track"><div class="toggle-dot"></div></div>
     <span class="toggle-label" id="toggle-label">DARK</span>
@@ -282,18 +397,18 @@
   <div class="hero"><h1>WEB DEVELOPER<br>&amp; DESIGNER.</h1></div>
 
   <div class="circle">
-    <img src="foto-index.jpeg" alt="Ceban Marius" />
+    <img src="foto/profile/hero.jpeg" alt="Ceban Marius" loading="lazy" />
   </div>
 
   <div class="avail-badge">
     <span class="avail-dot"></span>
-    <span>AVAILABLE FOR WORK</span>
+    <span data-i18n="avail">AVAILABLE FOR WORK</span>
   </div>
 
-  <a href="projects.html" data-nav class="label label-projects">PROJECTS</a>
-  <a href="about.html"    data-nav class="label label-about">ABOUT ME</a>
-  <a href="#" class="label label-contact" onclick="toggleContact(); return false;">CONTACT ME</a>
-  <a href="curriculumMarius.pdf" download class="label label-cv">DOWNLOAD CV</a>
+  <a href="projects.html" data-nav class="label label-projects" data-i18n="nav.projects">PROJECTS</a>
+  <a href="about.html"    data-nav class="label label-about" data-i18n="nav.about">ABOUT ME</a>
+  <a href="#" class="label label-contact" onclick="toggleContact(); return false;" data-i18n="nav.contact">CONTACT ME</a>
+  <a href="curriculumMarius.pdf" download class="label label-cv" data-i18n="nav.cv">DOWNLOAD CV</a>
 
   <svg class="lines" viewBox="0 0 800 565" preserveAspectRatio="none">
     <!-- Original two main curves -->
@@ -308,6 +423,17 @@
       d="M 20 580 C 110 505 460 228 548 158 C 632 88 672 84 700 96 C 736 112 758 178 846 695"/>
     <path id="path5" class="draw-path-thin"
       d="M 560 0 C 524 45 468 100 372 175 C 268 256 205 306 82 372 C 44 392 14 378 -3 306"/>
+    <!-- Flow particles — same geometry, animated short-dash on top -->
+    <path id="fp1" class="flow-path"
+      d="M 620, 0 C 580, 30 530, 70 430, 148 C 318, 232 252, 288 118, 380 C 68, 412 28, 390 10, 290 C 4, 254 0, 215 0, 180"/>
+    <path id="fp2" class="flow-path"
+      d="M 55, 580 C 150, 498 505, 210 588, 138 C 672, 64 710, 62 738, 74 C 772, 90 792, 160 800, 240 C 804, 276 806, 312 808, 348"/>
+    <path id="fp3" class="flow-path-thin"
+      d="M 680 0 C 640 35 585 80 480 158 C 365 244 295 298 155 388 C 100 420 55 400 -5 95"/>
+    <path id="fp4" class="flow-path-thin"
+      d="M 20 580 C 110 505 460 228 548 158 C 632 88 672 84 700 96 C 736 112 758 178 846 695"/>
+    <path id="fp5" class="flow-path-thin"
+      d="M 560 0 C 524 45 468 100 372 175 C 268 256 205 306 82 372 C 44 392 14 378 -3 306"/>
   </svg>
 
   <div class="mobile-layout">
@@ -315,38 +441,42 @@
       <path class="m-ml-path m-ml1" d="M 375 0 C 280 100 200 220 120 400 C 65 510 15 560 0 650"/>
       <path class="m-ml-thin m-ml2" d="M 0 80 C 90 190 200 320 260 500 C 305 610 365 660 375 750"/>
       <path class="m-ml-thin m-ml3" d="M 180 0 C 130 160 60 300 25 500 C 8 590 2 650 0 780"/>
+      <!-- Mobile flow particles -->
+      <path id="mfp1" class="m-flow-path" d="M 375 0 C 280 100 200 220 120 400 C 65 510 15 560 0 650"/>
+      <path id="mfp2" class="m-flow-path-thin" d="M 0 80 C 90 190 200 320 260 500 C 305 610 365 660 375 750"/>
+      <path id="mfp3" class="m-flow-path-thin" d="M 180 0 C 130 160 60 300 25 500 C 8 590 2 650 0 780"/>
     </svg>
     <div class="m-nav"><span><strong>CEBAN MARIUS</strong> <em>__portfolio</em></span></div>
     <div class="m-hero"><h1>WEB<br>DEVELOPER<br>&amp; DESIGNER.</h1></div>
-    <div class="m-photo"><img src="foto-index.jpeg" alt="Ceban Marius" /></div>
+    <div class="m-photo"><img src="foto/profile/hero.jpeg" alt="Ceban Marius" loading="lazy" /></div>
     <nav class="m-links">
       <a href="projects.html" data-nav class="m-link">
-        <div class="m-link-left"><span class="m-link-num">01</span><span class="m-link-label">PROJECTS</span></div>
+        <div class="m-link-left"><span class="m-link-num">01</span><span class="m-link-label" data-i18n="m.projects">PROJECTS</span></div>
         <span class="m-link-arrow">→</span>
       </a>
       <a href="about.html" data-nav class="m-link">
-        <div class="m-link-left"><span class="m-link-num">02</span><span class="m-link-label">ABOUT ME</span></div>
+        <div class="m-link-left"><span class="m-link-num">02</span><span class="m-link-label" data-i18n="m.about">ABOUT ME</span></div>
         <span class="m-link-arrow">→</span>
       </a>
       <a href="#" class="m-link" onclick="toggleContact(); return false;">
-        <div class="m-link-left"><span class="m-link-num">03</span><span class="m-link-label">CONTACT ME</span></div>
+        <div class="m-link-left"><span class="m-link-num">03</span><span class="m-link-label" data-i18n="m.contact">CONTACT ME</span></div>
         <span class="m-link-arrow">→</span>
       </a>
       <a href="curriculumMarius.pdf" download class="m-link">
-        <div class="m-link-left"><span class="m-link-num">04</span><span class="m-link-label">DOWNLOAD CV</span></div>
+        <div class="m-link-left"><span class="m-link-num">04</span><span class="m-link-label" data-i18n="m.cv">DOWNLOAD CV</span></div>
         <span class="m-link-arrow">↓</span>
       </a>
     </nav>
   </div>
 
   <div class="contact-panel" id="contactPanel">
-    <button class="contact-close" onclick="toggleContact()">_ CLOSE</button>
-    <h2>Let's talk.</h2>
+    <button class="contact-close" onclick="toggleContact()" data-i18n="contact.close">_ CLOSE</button>
+    <h2 data-i18n="contact.h2">Let's talk.</h2>
     <a href="mailto:cebanmarius15@gmail.com" class="contact-row">
       <div><div class="contact-row-label">EMAIL</div><div class="contact-row-value">cebanmarius15@gmail.com</div></div>
       <span class="contact-row-arrow">↗</span>
     </a>
-    <button class="contact-copy" id="copyEmailBtn" onclick="copyEmail()">_ COPY EMAIL ADDRESS</button>
+    <button class="contact-copy" id="copyEmailBtn" onclick="copyEmail()" data-i18n="contact.copy" data-copy-label="_ COPY EMAIL ADDRESS" data-copied-label="_ COPIED!">_ COPY EMAIL ADDRESS</button>
     <a href="https://www.linkedin.com/in/marius-ceban-7034191b5/" target="_blank" class="contact-row">
       <div><div class="contact-row-label">LINKEDIN</div><div class="contact-row-value">linkedin.com/in/cebanmarius</div></div>
       <span class="contact-row-arrow">↗</span>
@@ -355,9 +485,10 @@
       <div><div class="contact-row-label">GITHUB</div><div class="contact-row-value">github.com/MariusCeb</div></div>
       <span class="contact-row-arrow">↗</span>
     </a>
-    <p class="contact-note">Available for freelance projects,<br>collaborations and full-time roles.</p>
+    <p class="contact-note" data-i18n-html="contact.note">Available for freelance projects,<br>collaborations and full-time roles.</p>
   </div>
 
+  <script src="i18n.js"></script>
   <script>
     (function() {
       const saved = localStorage.getItem("theme") || "light";
@@ -387,9 +518,10 @@
     });
     function copyEmail() {
       var btn = document.getElementById('copyEmailBtn');
-      var orig = '_ COPY EMAIL ADDRESS';
+      var orig = btn.getAttribute('data-copy-label') || '_ COPY EMAIL ADDRESS';
+      var done = btn.getAttribute('data-copied-label') || '_ COPIED!';
       function confirm() {
-        btn.textContent = '_ COPIED!'; btn.classList.add('copied');
+        btn.textContent = done; btn.classList.add('copied');
         setTimeout(function() { btn.textContent = orig; btn.classList.remove('copied'); }, 2000);
       }
       if (navigator.clipboard && navigator.clipboard.writeText) {
@@ -443,6 +575,18 @@
         });
       }
       if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+      window.addEventListener('pageshow', function(e) {
+        if (!e.persisted) return;
+        overlay.style.pointerEvents = 'all';
+        blocks.forEach(function(b) { b.style.transition = 'none'; b.style.transformOrigin = 'right center'; b.style.transform = 'scaleX(1)'; });
+        setTimeout(function() {
+          blocks.forEach(function(b, i) {
+            b.style.transition = 'transform '+DUR+'s cubic-bezier(0.76,0,0.24,1) '+(i*STAGGER)+'s';
+            b.style.transform = 'scaleX(0)';
+          });
+          setTimeout(function() { overlay.style.pointerEvents = 'none'; }, (DUR+(N-1)*STAGGER)*1000+200);
+        }, 50);
+      });
     })();
     /* ── CURSOR ── */
     (function() {

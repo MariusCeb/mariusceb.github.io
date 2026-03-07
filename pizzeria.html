@@ -63,15 +63,16 @@
     }
     #cursor-dot {
       position: fixed; left: 0; top: 0;
-      width: 4px; height: 4px;
+      width: 6px; height: 6px;
       background: var(--fg); border-radius: 50%;
       pointer-events: none; z-index: 100000;
       transform: translate(-50%,-50%);
+      box-shadow: 0 0 0 2px var(--bg);
     }
     #cursor-line {
       position: fixed; left: 0; top: 0;
-      width: 1px; height: 22px;
-      background: var(--fg); opacity: 0.38;
+      width: 1px; height: 26px;
+      background: var(--fg); opacity: 0.5;
       pointer-events: none; z-index: 99999;
       transform: translate(-50%,-50%);
     }
@@ -96,6 +97,14 @@
     .toggle-dot { position: absolute; top: 3px; left: 3px; width: 9px; height: 9px; border-radius: 50%; background: var(--fg); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), background 0.3s; }
     [data-theme="dark"] .toggle-dot { transform: translateX(13px); }
     .toggle-label { font-size: 9px; letter-spacing: 0.1em; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: none; border: none; cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px; letter-spacing: 0.1em;
+      color: var(--muted); transition: color 0.2s; padding: 0;
+    }
+    .lang-toggle:hover { color: var(--fg); }
 
     /* ── MAIN ── */
     main { padding-top: 52px; }
@@ -308,6 +317,17 @@
     /* ── SCROLL REVEAL ── */
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.in-view { opacity: 1; transform: translateY(0); }
+    /* ── LIVE STATUS ── */
+    .status-live { display: inline-flex; align-items: center; gap: 7px; }
+    .status-dot-live {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #4caf50; flex-shrink: 0;
+      animation: pulse-green-live 2s ease-in-out infinite;
+    }
+    @keyframes pulse-green-live {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(76,175,80,0.5); }
+      50%       { box-shadow: 0 0 0 5px rgba(76,175,80,0); }
+    }
   </style>
 </head>
 <body>
@@ -320,79 +340,82 @@
 
   <header>
     <div class="header-left">
-      <a href="projects.html" class="back-link" data-nav>← PROJECTS</a>
-      <span class="breadcrumb">CEBAN MARIUS / PROJECTS / <span>UÀ ART&amp;PIZZA</span></span>
+      <a href="projects.html" class="back-link" data-nav data-i18n="back.projects">← PROJECTS</a>
+      <span class="breadcrumb" data-i18n-html="pz.crumb">CEBAN MARIUS / PROJECTS / <span>UÀ ART&amp;PIZZA</span></span>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-      <div class="toggle-track"><div class="toggle-dot"></div></div>
-      <span class="toggle-label" id="toggle-label">DARK</span>
-    </button>
+    <div class="header-right">
+      <button class="lang-toggle" onclick="toggleLang()" id="lang-toggle-label">IT</button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <div class="toggle-track"><div class="toggle-dot"></div></div>
+        <span class="toggle-label" id="toggle-label">DARK</span>
+      </button>
+    </div>
   </header>
 
   <main>
 
     <!-- HERO -->
     <div class="project-hero">
-      <div class="project-tag">02 — Web Design &amp; Development</div>
+      <div class="project-tag" data-i18n="pz.tag">02 — Web Design &amp; Development</div>
       <h1>Uà Art&amp;Pizza.</h1>
-      <p class="lead">A digital menu app for a Neapolitan pizzeria in Ravenna — 60+ pizzas across 9 categories, smart AND-logic ingredient filtering, sticky category navigation, and delivery info. Zero frameworks, instant load.</p>
+      <p class="lead" data-i18n="pz.lead">A digital menu app for a Neapolitan pizzeria in Ravenna — 60+ pizzas across 9 categories, smart AND-logic ingredient filtering, sticky category navigation, and delivery info. Zero frameworks, instant load.</p>
     </div>
 
     <!-- META -->
     <div class="project-meta">
       <div class="meta-item">
-        <div class="meta-label">Role</div>
-        <div class="meta-value">Designer &amp; Developer</div>
+        <div class="meta-label" data-i18n="meta.role">Role</div>
+        <div class="meta-value" data-i18n="pz.role">Designer &amp; Developer</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Year</div>
+        <div class="meta-label" data-i18n="meta.year">Year</div>
         <div class="meta-value">2025</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Stack</div>
+        <div class="meta-label" data-i18n="meta.stack">Stack</div>
         <div class="meta-value">Vanilla JS · HTML/CSS</div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Status</div>
-        <div class="meta-value">Live ↗</div>
+        <div class="meta-label" data-i18n="meta.status">Status</div>
+        <div class="meta-value"><span class="status-live"><span class="status-dot-live"></span>LIVE</span></div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">GitHub</div>
-        <div class="meta-value"><a href="https://github.com/MariusCeb/UaMenuPizzeria" class="meta-link" target="_blank">View Source ↗</a></div>
+        <div class="meta-label" data-i18n="meta.github">GitHub</div>
+        <div class="meta-value"><a href="https://github.com/MariusCeb/UaMenuPizzeria" class="meta-link" target="_blank" data-i18n="meta.view_src">View Source ↗</a></div>
       </div>
       <div class="meta-item">
-        <div class="meta-label">Live Site</div>
-        <div class="meta-value"><a href="https://app.netlify.com/projects/gleeful-clafoutis-ff9a11/" class="meta-link" target="_blank">Open Site ↗</a></div>
+        <div class="meta-label" data-i18n="meta.live">Live Site</div>
+        <div class="meta-value"><a href="https://mariusceb.github.io/UaMenuPizzeria/" class="meta-link" target="_blank" data-i18n="meta.open_site">Open Site ↗</a></div>
       </div>
     </div>
 
     <!-- IMAGE STRIP -->
     <div class="image-strip">
-      <div class="strip-img"><img src="foto/ua-pizzeria/index.png" alt="Uà Art&Pizza menu"></div>
-      <div class="strip-img"><img src="foto/ua-pizzeria/footer.png" alt="Uà Art&Pizza footer"></div>
+      <div class="strip-img"><img src="foto/ua-pizzeria/index.png" alt="Uà Art&Pizza menu" loading="lazy"></div>
+      <div class="strip-img"><img src="foto/ua-pizzeria/footer.png" alt="Uà Art&Pizza footer" loading="lazy"></div>
     </div>
 
     <!-- WHAT / WHY — split with sidebar photo -->
     <div class="content-split">
       <div class="content-split-left">
         <div class="content">
-          <div class="section-label">What</div>
-          <p><strong>Uà Art&amp;Pizza is a Neapolitan pizzeria on Via Giuseppe Vitale 6, Ravenna.</strong> Their menu is extensive — over 60 items across 9 sections, from fried starters and classic Margherita to the signature "Pizze di Dante" triptych (Inferno, Purgatorio, Paradiso) and the chef's pick "La Divina Commedia".</p>
-          <p>The digital menu replaces a static PDF with a scrollable, filterable, mobile-first experience. Each pizza card shows name, base sauce, toppings, and price. Delivery info and allergen notices are embedded directly in the page — no separate documents needed.</p>
+          <div class="section-label" data-i18n="section.what">What</div>
+          <p data-i18n-html="pz.what.p1"><strong>Uà Art&amp;Pizza is a Neapolitan pizzeria on Via Giuseppe Vitale 6, Ravenna.</strong> Their menu is extensive — over 60 items across 9 sections, from fried starters and classic Margherita to the signature "Pizze di Dante" triptych (Inferno, Purgatorio, Paradiso) and the chef's pick "La Divina Commedia".</p>
+          <p data-i18n="pz.what.p2">The digital menu replaces a static PDF with a scrollable, filterable, mobile-first experience. Each pizza card shows name, base sauce, toppings, and price. Delivery info and allergen notices are embedded directly in the page — no separate documents needed.</p>
         </div>
 
         <div class="section-divider">· · · ◆ · · ·</div>
 
         <div class="content" style="padding-top: 0;">
-          <div class="section-label">Why</div>
-          <p>PDF menus are frustrating on mobile, impossible to search, and slow to update. The pizzeria needed a solution that loaded in a second, worked offline-ready, and could be updated directly in HTML without a CMS or subscription.</p>
-          <p>The ingredient filter addresses a real problem: <strong>customers with dietary restrictions or preferences have no way to quickly find compatible pizzas from a 60-item list.</strong> The AND-logic filter solves this — select "Tartufo" and "Burrata" and you instantly see only the pizzas containing both.</p>
+          <div class="section-label" data-i18n="section.why">Why</div>
+          <p data-i18n="pz.why.p1">PDF menus are frustrating on mobile, impossible to search, and slow to update. The pizzeria needed a solution that loaded in a second, worked offline-ready, and could be updated directly in HTML without a CMS or subscription.</p>
+          <p data-i18n-html="pz.why.p2">The ingredient filter addresses a real problem: <strong>customers with dietary restrictions or preferences have no way to quickly find compatible pizzas from a 60-item list.</strong> The AND-logic filter solves this — select "Tartufo" and "Burrata" and you instantly see only the pizzas containing both.</p>
         </div>
       </div>
 
       <div class="content-split-right">
         <div class="sidebar-photo">
-          <img src="foto/ua-pizzeria/phone-filter.png" alt="Uà Art&Pizza filter on mobile">
+          <img src="foto/ua-pizzeria/phone-filter.png" alt="Uà Art&Pizza filter on mobile" loading="lazy">
         </div>
       </div>
     </div>
@@ -400,22 +423,22 @@
     <!-- FEATURE ROW 1: text left, image right -->
     <div class="feature-row">
       <div class="feature-text">
-        <h3>AND-Logic Ingredient Filter</h3>
-        <p>A slide-up filter panel groups ingredients by type (base, dairy, meat, vegetables, fish). Selecting multiple ingredients shows only pizzas that contain all of them simultaneously — not just any one. Built in vanilla JS with fuzzy substring matching to handle variations like "Grana in Cottura" matching a filter for "Grana".</p>
+        <h3 data-i18n="pz.f1.ttl">AND-Logic Ingredient Filter</h3>
+        <p data-i18n="pz.f1.dsc">A slide-up filter panel groups ingredients by type (base, dairy, meat, vegetables, fish). Selecting multiple ingredients shows only pizzas that contain all of them simultaneously — not just any one. Built in vanilla JS with fuzzy substring matching to handle variations like "Grana in Cottura" matching a filter for "Grana".</p>
       </div>
       <div class="feature-img">
-        <img src="foto/ua-pizzeria/pizze.png" alt="Pizza list">
+        <img src="foto/ua-pizzeria/pizze.png" alt="Pizza list" loading="lazy">
       </div>
     </div>
 
     <!-- FEATURE ROW 2: image left, text right -->
     <div class="feature-row">
       <div class="feature-img">
-        <img src="foto/ua-pizzeria/footertwo.png" alt="Footer section">
+        <img src="foto/ua-pizzeria/footertwo.png" alt="Footer section" loading="lazy">
       </div>
       <div class="feature-text">
-        <h3>Sticky Category Navigation</h3>
-        <p>A fixed secondary nav bar below the header contains scrollable category pills. As the user scrolls, an IntersectionObserver tracks the current section and highlights the matching pill, auto-scrolling it into view within the nav bar if off-screen. Clicking a pill smooth-scrolls to the section with correct offset for the double fixed header.</p>
+        <h3 data-i18n="pz.f2.ttl">Sticky Category Navigation</h3>
+        <p data-i18n="pz.f2.dsc">A fixed secondary nav bar below the header contains scrollable category pills. As the user scrolls, an IntersectionObserver tracks the current section and highlights the matching pill, auto-scrolling it into view within the nav bar if off-screen. Clicking a pill smooth-scrolls to the section with correct offset for the double fixed header.</p>
       </div>
     </div>
 
@@ -425,17 +448,17 @@
     <div class="outcome-section">
       <div class="outcome-content">
         <div class="content" style="animation-delay: 0.6s;">
-          <div class="section-label">Outcome</div>
-          <h2>What shipped</h2>
-          <p>A complete digital menu with 9 sections (Friggitoria, I Classici, Le Amici, Le Artistiche, Le Pizze di Dante, Calzoni Fritti, Focacce, Dolcezze, Bevande), an extras/additions grid, delivery banner, allergen notice, and footer. The ingredient filter covers 30+ filterable ingredients across 6 categories. No backend, no build step, instant loading on any network.</p>
-          <h2>What I learned</h2>
-          <p>IntersectionObserver-based nav tracking requires careful accounting for multi-layer fixed headers — offset calculations must factor in both the top nav and the category strip. I also learned that <strong>AND-logic filtering is significantly more useful than OR</strong> for ingredient-based selection: users want to find what fits all their constraints, not anything that matches any one of them.</p>
+          <div class="section-label" data-i18n="section.outcome">Outcome</div>
+          <h2 data-i18n="outcome.h1">What shipped</h2>
+          <p data-i18n="pz.out.p1">A complete digital menu with 9 sections (Friggitoria, I Classici, Le Amici, Le Artistiche, Le Pizze di Dante, Calzoni Fritti, Focacce, Dolcezze, Bevande), an extras/additions grid, delivery banner, allergen notice, and footer. The ingredient filter covers 30+ filterable ingredients across 6 categories. No backend, no build step, instant loading on any network.</p>
+          <h2 data-i18n="outcome.h2">What I learned</h2>
+          <p data-i18n-html="pz.out.p2">IntersectionObserver-based nav tracking requires careful accounting for multi-layer fixed headers — offset calculations must factor in both the top nav and the category strip. I also learned that <strong>AND-logic filtering is significantly more useful than OR</strong> for ingredient-based selection: users want to find what fits all their constraints, not anything that matches any one of them.</p>
         </div>
       </div>
 
       <div class="outcome-photo-col">
         <div class="outcome-photo">
-          <img src="foto/ua-pizzeria/phone-bevande.png" alt="Uà Art&Pizza mobile view">
+          <img src="foto/ua-pizzeria/phone-bevande.png" alt="Uà Art&Pizza mobile view" loading="lazy">
         </div>
       </div>
     </div>
@@ -443,8 +466,8 @@
     <!-- NEXT PROJECT -->
     <a href="serenamente.html" class="next-project" data-nav>
       <div>
-        <div class="next-label">NEXT PROJECT</div>
-        <div class="next-title">Serenamente →</div>
+        <div class="next-label" data-i18n="next.label">NEXT PROJECT</div>
+        <div class="next-title" data-i18n="pz.next">Serenamente →</div>
       </div>
       <span class="next-arrow">↗</span>
     </a>
@@ -453,10 +476,11 @@
 
   <!-- LIGHTBOX -->
   <div id="lightbox" class="lightbox" onclick="if(event.target===this)closeLightbox()">
-    <button class="lightbox-close" onclick="closeLightbox()">✕ CLOSE</button>
+    <button class="lightbox-close" onclick="closeLightbox()" data-i18n="lightbox.close">✕ CLOSE</button>
     <img class="lightbox-img" id="lightboxImg" src="" alt="" />
   </div>
 
+  <script src="i18n.js"></script>
   <script>
     (function() {
       const saved = localStorage.getItem('theme') || 'light';
@@ -507,6 +531,18 @@
         });
       }
       if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+      window.addEventListener('pageshow', function(e) {
+        if (!e.persisted) return;
+        overlay.style.pointerEvents = 'all';
+        blocks.forEach(function(b) { b.style.transition = 'none'; b.style.transformOrigin = 'right center'; b.style.transform = 'scaleX(1)'; });
+        setTimeout(function() {
+          blocks.forEach(function(b, i) {
+            b.style.transition = 'transform '+DUR+'s cubic-bezier(0.76,0,0.24,1) '+(i*STAGGER)+'s';
+            b.style.transform = 'scaleX(0)';
+          });
+          setTimeout(function() { overlay.style.pointerEvents = 'none'; }, (DUR+(N-1)*STAGGER)*1000+200);
+        }, 50);
+      });
     })();
     /* ── CURSOR ── */
     (function() {
@@ -571,6 +607,6 @@
     })();
   </script>
 
-  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="back.top">↑ TOP</button>
 </body>
 </html>

@@ -55,15 +55,16 @@
     }
     #cursor-dot {
       position: fixed; left: 0; top: 0;
-      width: 4px; height: 4px;
+      width: 6px; height: 6px;
       background: var(--fg); border-radius: 50%;
       pointer-events: none; z-index: 100000;
       transform: translate(-50%,-50%);
+      box-shadow: 0 0 0 2px var(--bg);
     }
     #cursor-line {
       position: fixed; left: 0; top: 0;
-      width: 1px; height: 22px;
-      background: var(--fg); opacity: 0.38;
+      width: 1px; height: 26px;
+      background: var(--fg); opacity: 0.5;
       pointer-events: none; z-index: 99999;
       transform: translate(-50%,-50%);
     }
@@ -110,6 +111,14 @@
       font-size: 9px; letter-spacing: 0.1em; color: var(--muted);
       font-family: 'IBM Plex Mono', monospace;
     }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: none; border: none; cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px; letter-spacing: 0.1em;
+      color: var(--muted); transition: color 0.2s; padding: 0;
+    }
+    .lang-toggle:hover { color: var(--fg); }
 
     /* ── LAYOUT ── */
     main { padding-top: 52px; }
@@ -349,12 +358,15 @@
   <header>
     <div class="header-left">
       <a href="index.html" class="back-link" data-nav>← HOME</a>
-      <span class="breadcrumb">CEBAN MARIUS / <span>ABOUT ME</span></span>
+      <span class="breadcrumb" data-i18n-html="about.crumb">CEBAN MARIUS / <span>ABOUT ME</span></span>
     </div>
-    <button class="theme-toggle" onclick="toggleTheme()">
-      <div class="toggle-track"><div class="toggle-dot"></div></div>
-      <span class="toggle-label" id="toggle-label">DARK</span>
-    </button>
+    <div class="header-right">
+      <button class="lang-toggle" onclick="toggleLang()" id="lang-toggle-label">IT</button>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <div class="toggle-track"><div class="toggle-dot"></div></div>
+        <span class="toggle-label" id="toggle-label">DARK</span>
+      </button>
+    </div>
   </header>
 
   <main>
@@ -363,12 +375,12 @@
     <div class="about-hero">
       <div class="hero-left">
         <div>
-          <div style="font-size:9px;letter-spacing:0.16em;color:var(--muted);margin-bottom:20px;">ABOUT ME</div>
+          <div style="font-size:9px;letter-spacing:0.16em;color:var(--muted);margin-bottom:20px;" data-i18n="about.eyebrow">ABOUT ME</div>
           <h1>Web<br>Developer<br>&amp; Designer.</h1>
         </div>
-        <div class="subtitle">BASED IN ITALY — AVAILABLE WORLDWIDE</div>
+        <div class="subtitle" data-i18n="about.subtitle">BASED IN ITALY — AVAILABLE WORLDWIDE</div>
       </div>
-      <div class="hero-right" style="background-image:url('foto-about.jpeg');background-size:cover;background-position:center 45%;">
+      <div class="hero-right" style="background-image:url('foto/profile/about.jpeg');background-size:cover;background-position:center 45%;">
         <div class="hero-right-label">LAGO DI BRAIES — 2024</div>
       </div>
     </div>
@@ -383,66 +395,66 @@
 
     <!-- BIO -->
     <div class="bio-section">
-      <div class="bio-label">Bio</div>
+      <div class="bio-label" data-i18n="about.bio.label">Bio</div>
       <div class="bio-content">
-        <p><strong>I'm Ceban Marius</strong>, a web developer and designer focused on building clean, intentional digital experiences. I care about the details — the spacing, the motion, the way things feel when you use them.</p>
-        <p>I work across the full stack but my passion sits at the intersection of design and code. I believe good software should feel as good as it works.</p>
-        <p>When I'm not building things I'm studying new patterns, experimenting with interfaces, and thinking about how technology shapes the way we live.</p>
+        <p data-i18n-html="about.bio.p1"><strong>I'm Ceban Marius</strong>, a web developer and designer focused on building clean, intentional digital experiences. I care about the details — the spacing, the motion, the way things feel when you use them.</p>
+        <p data-i18n="about.bio.p2">I work across the full stack but my passion sits at the intersection of design and code. I believe good software should feel as good as it works.</p>
+        <p data-i18n="about.bio.p3">When I'm not building things I'm studying new patterns, experimenting with interfaces, and thinking about how technology shapes the way we live.</p>
       </div>
     </div>
 
     <!-- SKILLS -->
     <div class="skills-section">
-      <div class="skills-label">Skills</div>
+      <div class="skills-label" data-i18n="about.skills.lbl">Skills</div>
       <div class="skills-grid">
         <div class="skill-item">
-          <div class="skill-name">UI Design</div>
-          <div class="skill-desc">Figma, design systems, prototyping</div>
+          <div class="skill-name" data-i18n="about.skill.ui.n">UI Design</div>
+          <div class="skill-desc" data-i18n="about.skill.ui.d">Figma, design systems, prototyping</div>
         </div>
         <div class="skill-item">
-          <div class="skill-name">Frontend</div>
-          <div class="skill-desc">HTML, CSS, JS, React, TypeScript</div>
+          <div class="skill-name" data-i18n="about.skill.fe.n">Frontend</div>
+          <div class="skill-desc" data-i18n="about.skill.fe.d">HTML, CSS, JS, React, TypeScript</div>
         </div>
         <div class="skill-item">
-          <div class="skill-name">Motion</div>
-          <div class="skill-desc">CSS animations, transitions</div>
+          <div class="skill-name" data-i18n="about.skill.mo.n">Motion</div>
+          <div class="skill-desc" data-i18n="about.skill.mo.d">CSS animations, transitions</div>
         </div>
         <div class="skill-item">
-          <div class="skill-name">Backend</div>
-          <div class="skill-desc">PHP, Laravel, Node.js, REST APIs</div>
+          <div class="skill-name" data-i18n="about.skill.be.n">Backend</div>
+          <div class="skill-desc" data-i18n="about.skill.be.d">PHP, Laravel, Node.js, REST APIs</div>
         </div>
         <div class="skill-item">
-          <div class="skill-name">Branding</div>
-          <div class="skill-desc">Identity, typography, color</div>
+          <div class="skill-name" data-i18n="about.skill.br.n">Branding</div>
+          <div class="skill-desc" data-i18n="about.skill.br.d">Identity, typography, color</div>
         </div>
         <div class="skill-item">
-          <div class="skill-name">Strategy</div>
-          <div class="skill-desc">UX research, product thinking</div>
+          <div class="skill-name" data-i18n="about.skill.st.n">Strategy</div>
+          <div class="skill-desc" data-i18n="about.skill.st.d">UX research, product thinking</div>
         </div>
       </div>
     </div>
 
     <!-- EXPERIENCE -->
     <div class="exp-section">
-      <div class="exp-label">Experience</div>
+      <div class="exp-label" data-i18n="about.exp.lbl">Experience</div>
       <div class="exp-list">
         <div class="exp-item">
           <div>
-            <div class="exp-role">Computer Science degree</div>
+            <div class="exp-role" data-i18n="about.exp0.role">Computer Science degree</div>
             <div class="exp-company">Ferrara - Italy</div>
           </div>
           <div class="exp-year">2026</div>
         </div>
         <div class="exp-item">
           <div>
-            <div class="exp-role">Web Developer & Designer</div>
+            <div class="exp-role" data-i18n="about.exp1.role">Web Developer & Designer</div>
             <div class="exp-company">FREELANCE</div>
           </div>
-          <div class="exp-year">2025 — NOW</div>
+          <div class="exp-year" data-i18n="about.exp1.year">2025 — NOW</div>
         </div>
         <div class="exp-item">
           <div>
-            <div class="exp-role">Software Programmer</div>
+            <div class="exp-role" data-i18n="about.exp2.role">Software Programmer</div>
             <div class="exp-company">Medical Device Group srl</div>
           </div>
           <div class="exp-year">2021 — 2022</div>
@@ -452,27 +464,27 @@
 
     <!-- PROCESS -->
     <div class="process-section">
-      <div class="process-label">Process</div>
+      <div class="process-label" data-i18n="about.proc.lbl">Process</div>
       <div class="process-grid">
         <div class="process-item">
           <div class="process-num">01</div>
-          <div class="process-title">Discover</div>
-          <div class="process-desc">Understanding the problem space, users, and goals before touching any code.</div>
+          <div class="process-title" data-i18n="about.proc0.ttl">Discover</div>
+          <div class="process-desc" data-i18n="about.proc0.dsc">Understanding the problem space, users, and goals before touching any code.</div>
         </div>
         <div class="process-item">
           <div class="process-num">02</div>
-          <div class="process-title">Design</div>
-          <div class="process-desc">Wireframing, prototyping, and defining the visual language with intentional constraints.</div>
+          <div class="process-title" data-i18n="about.proc1.ttl">Design</div>
+          <div class="process-desc" data-i18n="about.proc1.dsc">Wireframing, prototyping, and defining the visual language with intentional constraints.</div>
         </div>
         <div class="process-item">
           <div class="process-num">03</div>
-          <div class="process-title">Build</div>
-          <div class="process-desc">Translating design into clean, semantic code. Every interaction considered.</div>
+          <div class="process-title" data-i18n="about.proc2.ttl">Build</div>
+          <div class="process-desc" data-i18n="about.proc2.dsc">Translating design into clean, semantic code. Every interaction considered.</div>
         </div>
         <div class="process-item">
           <div class="process-num">04</div>
-          <div class="process-title">Ship</div>
-          <div class="process-desc">Deploying with confidence. Performance, accessibility, and detail all accounted for.</div>
+          <div class="process-title" data-i18n="about.proc3.ttl">Ship</div>
+          <div class="process-desc" data-i18n="about.proc3.dsc">Deploying with confidence. Performance, accessibility, and detail all accounted for.</div>
         </div>
       </div>
     </div>
@@ -480,14 +492,15 @@
     <!-- CTA -->
     <a href="projects.html" class="about-cta" data-nav>
       <div>
-        <div class="cta-label">NEXT</div>
-        <div class="cta-title">See my projects →</div>
+        <div class="cta-label" data-i18n="about.cta.lbl">NEXT</div>
+        <div class="cta-title" data-i18n="about.cta.ttl">See my projects →</div>
       </div>
       <span class="cta-arrow">↗</span>
     </a>
 
   </main>
 
+  <script src="i18n.js"></script>
   <script>
     (function() {
       const saved = localStorage.getItem('theme') || 'light';
@@ -536,6 +549,18 @@
         });
       }
       if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+      window.addEventListener('pageshow', function(e) {
+        if (!e.persisted) return;
+        overlay.style.pointerEvents = 'all';
+        blocks.forEach(function(b) { b.style.transition = 'none'; b.style.transformOrigin = 'right center'; b.style.transform = 'scaleX(1)'; });
+        setTimeout(function() {
+          blocks.forEach(function(b, i) {
+            b.style.transition = 'transform '+DUR+'s cubic-bezier(0.76,0,0.24,1) '+(i*STAGGER)+'s';
+            b.style.transform = 'scaleX(0)';
+          });
+          setTimeout(function() { overlay.style.pointerEvents = 'none'; }, (DUR+(N-1)*STAGGER)*1000+200);
+        }, 50);
+      });
     })();
     /* ── CURSOR ── */
     (function() {
@@ -589,6 +614,6 @@
     })();
   </script>
 
-  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑ TOP</button>
+  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="back.top">↑ TOP</button>
 </body>
 </html>

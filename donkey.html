@@ -333,8 +333,9 @@
     .split-photo { background: var(--card-bg); background-size: cover; background-position: center; overflow: hidden; cursor: zoom-in; transition: opacity 0.3s, background 0.4s; flex-shrink: 0; position: relative; }
     .split-photo:hover { opacity: 0.82; }
     .split-photo--desktop { width: 100%; aspect-ratio: 16/9; }
-    .split-photo--portrait { width: 100%; aspect-ratio: 9/16; }
+    .split-photo--portrait { width: 100%; background: var(--bg); }
     .split-photo img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .split-photo--portrait img { position: static; width: 100%; height: auto; display: block; object-fit: initial; }
     .outcome-split { display: block; }
     .outcome-right { display: none; }
     .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.93); z-index: 2000; display: none; align-items: center; justify-content: center; }
@@ -348,8 +349,9 @@
       .content-split-left .content { max-width: none; padding-right: 20px; }
       .content-split-right { padding: 24px 20px; position: sticky; top: 52px; align-self: start; overflow: visible; }
       .outcome-split { display: grid; grid-template-columns: 1fr 280px; }
-      .outcome-right { border-left: 1px solid var(--border); display: flex; align-items: stretch; }
-      .outcome-right .split-photo { flex: 1; width: 100%; }
+      .outcome-right { border-left: 1px solid var(--border); display: flex; align-items: flex-start; align-self: start; }
+      .outcome-right .split-photo { width: 100%; overflow: hidden; background: var(--bg); }
+      .outcome-right .split-photo img { position: static; width: 100%; height: auto; display: block; object-fit: initial; }
     }
     @media (max-width: 600px) {
       .content-split-right { position: static; max-height: none; flex-direction: row; overflow-x: auto; overflow-y: hidden; padding: 20px; border-top: 1px solid var(--border); gap: 16px; }

@@ -342,6 +342,11 @@
     .lightbox.active { display: flex; }
     .lightbox-close { position: absolute; top: 20px; right: 28px; background: none; border: none; color: rgba(255,255,255,0.65); font-size: 11px; letter-spacing: 0.12em; cursor: pointer; font-family: 'IBM Plex Mono', monospace; transition: color 0.2s; padding: 8px; }
     .lightbox-close:hover { color: #fff; }
+    .lightbox-prev, .lightbox-next { position: absolute; top: 50%; transform: translateY(-50%); background: none; border: 1px solid rgba(255,255,255,0.22); color: rgba(255,255,255,0.75); font-family: 'IBM Plex Mono', monospace; font-size: 13px; letter-spacing: 0.1em; padding: 14px 20px; cursor: pointer; z-index: 2001; transition: background 0.2s, color 0.2s, border-color 0.2s; }
+    .lightbox-prev { left: 24px; }
+    .lightbox-next { right: 24px; }
+    .lightbox-prev:hover, .lightbox-next:hover { background: rgba(255,255,255,0.1); color: #fff; border-color: rgba(255,255,255,0.5); }
+    .lightbox-prev[disabled], .lightbox-next[disabled] { opacity: 0.15; pointer-events: none; }
     .lightbox-img { max-width: 92vw; max-height: 90 vh; object-fit: contain; display: block; user-select: none; }
     @media (min-width: 601px) {
       .content-split { display: grid; grid-template-columns: 1fr 280px; }
@@ -538,7 +543,9 @@
   <!-- LIGHTBOX -->
   <div id="lightbox" class="lightbox" onclick="if(event.target===this)closeLightbox()">
     <button class="lightbox-close" onclick="closeLightbox()" data-i18n="lightbox.close">✕ CLOSE</button>
+    <button class="lightbox-prev" id="lightboxPrev" onclick="navigateLightbox(-1)">←</button>
     <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+    <button class="lightbox-next" id="lightboxNext" onclick="navigateLightbox(1)">→</button>
   </div>
 
   <script src="i18n.js"></script>
@@ -631,25 +638,41 @@
       })();
     })();
     // Lightbox
-    function openLightbox(src) {
-      document.getElementById('lightboxImg').src = src;
+    var _lbImgs = [], _lbIdx = 0;
+    (function() {
+      document.querySelectorAll('.strip-img, .feature-img, .split-photo').forEach(function(el) {
+        var src = '';
+        var img = el.querySelector('img');
+        if (img && img.src) { src = img.src; }
+        else { var bg = window.getComputedStyle(el).backgroundImage; var m = bg.match(/url\(["']?([^"')]+)["']?\)/); if (m && m[1]) src = m[1]; }
+        if (src) { _lbImgs.push(src); el.addEventListener('click', (function(s) { return function() { _lbIdx = _lbImgs.indexOf(s); _openLb(); }; })(src)); }
+      });
+    })();
+    function _openLb() {
+      document.getElementById('lightboxImg').src = _lbImgs[_lbIdx];
       document.getElementById('lightbox').classList.add('active');
       document.body.style.overflow = 'hidden';
+      _lbSync();
     }
+    function _lbSync() {
+      var p = document.getElementById('lightboxPrev'), n = document.getElementById('lightboxNext');
+      if (p) _lbIdx > 0 ? p.removeAttribute('disabled') : p.setAttribute('disabled', '');
+      if (n) _lbIdx < _lbImgs.length - 1 ? n.removeAttribute('disabled') : n.setAttribute('disabled', '');
+    }
+    function navigateLightbox(dir) {
+      var i = _lbIdx + dir;
+      if (i >= 0 && i < _lbImgs.length) { _lbIdx = i; document.getElementById('lightboxImg').src = _lbImgs[i]; _lbSync(); }
+    }
+    function openLightbox(src) { _lbIdx = Math.max(0, _lbImgs.indexOf(src)); _openLb(); }
     function closeLightbox() {
       document.getElementById('lightbox').classList.remove('active');
       document.getElementById('lightboxImg').src = '';
       document.body.style.overflow = '';
     }
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
-    document.querySelectorAll('.strip-img, .feature-img, .split-photo').forEach(el => {
-      el.addEventListener('click', function() {
-        const img = this.querySelector('img');
-        if (img && img.src) { openLightbox(img.src); return; }
-        const bg = window.getComputedStyle(this).backgroundImage;
-        const m = bg.match(/url\(["']?([^"')]+)["']?\)/);
-        if (m && m[1]) openLightbox(m[1]);
-      });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigateLightbox(-1);
+      if (e.key === 'ArrowRight') navigateLightbox(1);
     });
     /* ── READING PROGRESS ── */
     (function() {

@@ -4,10 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Flavory — Ceban Marius</title>
-  <meta name="description" content="Flavory — A food and wine pairing web application. Scroll-based cinematic frame animation across 300 preloaded PNG frames, Intersection Observer content reveals, and a Node.js/Express backend with JWT authentication and Stripe integration." />
+  <meta name="description" content="Flavory — A GPT-4o powered food-wine pairing SaaS. AI sommelier with local Italian DOC recommendations, freemium model with live Stripe subscription, pairing history, and a full marketing landing page." />
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Flavory — Ceban Marius" />
-  <meta property="og:description" content="A food and wine pairing web application. Scroll-based cinematic frame animation across 300 preloaded PNG frames, Intersection Observer content reveals, and a Node.js/Express backend with JWT authentication and Stripe integration." />
+  <meta property="og:description" content="A GPT-4o powered food-wine pairing SaaS. AI sommelier with local Italian DOC recommendations, freemium model with live Stripe subscription, pairing history, and a full marketing landing page." />
   <meta property="og:site_name" content="Ceban Marius — Portfolio" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='monospace' font-size='14' font-weight='bold' fill='%23e8e6e1'%3Ecm%3C/text%3E%3C/svg%3E" />
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;700&display=swap" rel="stylesheet"/>
@@ -172,6 +172,7 @@
       border-bottom: 1px solid var(--border);
       opacity: 0;
       animation: fadeUp 0.7s ease 0.25s forwards;
+      flex-wrap: wrap;
     }
     .meta-label {
       font-size: 8px;
@@ -312,7 +313,7 @@
       .breadcrumb { display: none; }
       .project-hero { padding: 40px 20px 36px; }
       .project-hero h1 { font-size: 28px; }
-      .project-meta { padding: 20px; gap: 24px; flex-wrap: wrap; }
+      .project-meta { padding: 20px; gap: 24px; }
       .strip-img { width: 300px; height: 220px; }
       .strip-img:first-child { width: 380px; }
       .content { padding: 48px 20px; }
@@ -320,7 +321,7 @@
       .feature-img { min-height: 200px; }
       .next-project { padding: 28px 20px; }
     }
-    .strip-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .strip-img img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
     .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; opacity: 0.035; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 200px 200px; }
     .feature-img { position: relative; background-size: cover; background-position: center; overflow: hidden; cursor: zoom-in; }
     .feature-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -331,7 +332,7 @@
     .split-photo:hover { opacity: 0.82; }
     .split-photo--desktop { width: 100%; aspect-ratio: 16/9; }
     .split-photo--portrait { width: 100%; aspect-ratio: 9/16; }
-    .split-photo img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .split-photo img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; object-fit: cover; }
     .outcome-split { display: block; }
     .outcome-right { display: none; }
     .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.93); z-index: 2000; display: none; align-items: center; justify-content: center; }
@@ -346,7 +347,7 @@
       .content-split-right { padding: 24px 20px; position: sticky; top: 52px; align-self: start; overflow: visible; }
       .outcome-split { display: grid; grid-template-columns: 1fr 280px; }
       .outcome-right { border-left: 1px solid var(--border); display: flex; align-items: stretch; }
-      .outcome-right .split-photo { flex: 1; width: 100%; }
+      .outcome-right .split-photo { flex: 1; width: 100%; aspect-ratio: unset; }
     }
     @media (max-width: 600px) {
       .content-split-right { position: static; max-height: none; flex-direction: row; overflow-x: auto; overflow-y: hidden; padding: 20px; border-top: 1px solid var(--border); gap: 16px; }
@@ -379,10 +380,7 @@
     .reveal.in-view { opacity: 1; transform: translateY(0); }
     /* ── PORTFOLIO STATUS ── */
     .status-portfolio { display: inline-flex; align-items: center; gap: 7px; }
-    .status-dot-portfolio {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--muted); flex-shrink: 0;
-    }
+    .status-dot-portfolio { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
   </style>
 </head>
 <body>
@@ -413,7 +411,7 @@
     <div class="project-hero">
       <div class="project-tag" data-i18n="fl.tag">06 — Full Stack Development</div>
       <h1>Flavory.</h1>
-      <p class="lead" data-i18n="fl.lead">A food and wine pairing web application — scroll-based cinematic frame animation across 300 preloaded PNG frames, Intersection Observer content reveals, and a Node.js/Express backend with JWT authentication and Stripe payment integration.</p>
+      <p class="lead" data-i18n="fl.lead">A GPT-4o powered food-wine pairing SaaS — AI sommelier with local Italian DOC/DOCG recommendations, freemium usage model with live Stripe subscription at €9.99/month, searchable pairing history, and a full marketing landing page. Built with Node.js, Express, and the OpenAI API.</p>
     </div>
 
     <!-- META -->
@@ -424,11 +422,11 @@
       </div>
       <div class="meta-item">
         <div class="meta-label" data-i18n="meta.year">Year</div>
-        <div class="meta-value">2023</div>
+        <div class="meta-value">2025</div>
       </div>
       <div class="meta-item">
         <div class="meta-label" data-i18n="meta.stack">Stack</div>
-        <div class="meta-value">HTML/CSS/JS, Node.js, Express, JWT, Stripe</div>
+        <div class="meta-value">Node.js, Express, OpenAI GPT-4o, Stripe, JWT</div>
       </div>
       <div class="meta-item">
         <div class="meta-label" data-i18n="meta.status">Status</div>
@@ -440,14 +438,12 @@
       </div>
     </div>
 
-    <!-- IMAGE STRIP — add screenshots here -->
+    <!-- IMAGE STRIP — landing page overview -->
     <div class="image-strip">
-      <!-- placeholder: foto/flavory/hero.png — hero section with Flavory wordmark -->
-      <div class="strip-img"><img src="foto/flavory/hero.png" alt="Flavory hero section" loading="lazy"></div>
-      <!-- placeholder: foto/flavory/scroll-anim.png — scroll animation section mid-play -->
-      <div class="strip-img"><img src="foto/flavory/scroll-anim.png" alt="Scroll animation section" loading="lazy"></div>
-      <!-- placeholder: foto/flavory/pairing.png — pairing discovery section -->
-      <div class="strip-img"><img src="foto/flavory/pairing.png" alt="Pairing discovery section" loading="lazy"></div>
+      <div class="strip-img"><img src="foto/flavory/flavory.png" alt="Flavory — index / homepage hero" loading="lazy"></div>
+      <div class="strip-img"><img src="foto/flavory/perche-section.png" alt="Perché Flavory — feature list with AI sommelier, local and supermarket sections" loading="lazy"></div>
+      <div class="strip-img"><img src="foto/flavory/trepassi-section.png" alt="Come funziona — Tre passi verso il vino perfetto" loading="lazy"></div>
+      <div class="strip-img"><img src="foto/flavory/provaora-section.png" alt="CTA section — Pronto per il vino perfetto?" loading="lazy"></div>
     </div>
 
     <!-- CONTENT SPLIT -->
@@ -457,9 +453,9 @@
         <!-- WHAT -->
         <div class="content">
           <div class="section-label" data-i18n="section.what">What</div>
-          <p data-i18n-html="fl.what.p1"><strong>Flavory is a full-stack web application built to make food and wine pairing accessible to everyone.</strong> The landing page is structured around three distinct sections: an editorial hero with the Flavory wordmark and tagline ("Where Every Flavor Finds Its Perfect Pairing"), a 150vh scroll-animation section where a cinematic wine sequence plays frame by frame tied to scroll position, and a discovery section with editorial copy and a primary CTA leading into the application itself.</p>
-          <p data-i18n="fl.what.p2">The application runs on a Node.js/Express backend that handles user authentication with JWT tokens and bcryptjs password hashing, cookie-based session management, and a Stripe payment integration — indicating a premium pairing engine behind the marketing surface. The frontend is built in pure HTML, CSS, and vanilla JavaScript, using Playfair Display typography and a warm crimson-cream palette (#b22222 / #fff2f2) that reflects the subject matter.</p>
-          <p data-i18n="fl.what.p3">Users navigate the site via a sticky top navbar with logo, three section links (Home, Menu, Wine), and a Login CTA button. A custom crimson dot cursor and red text-selection highlight reinforce the brand identity down to the micro-interaction level.</p>
+          <p data-i18n-html="fl.what.p1"><strong>Flavory is a full-stack SaaS application that acts as a personal AI sommelier.</strong> The public face is a polished marketing landing page with three sections — Funzionalità, Come funziona, Prezzi — built in Playfair Display with a crimson-cream palette that communicates premium and editorial before the user clicks anything. The navbar greets logged-in users by name and offers a direct "Vai all'app →" CTA.</p>
+          <p data-i18n="fl.what.p2">Inside the app, users access a three-tab dashboard: Sommelier, Cronologia, and Abbonamento. The core feature presents two modes — "Ho il cibo" (I have the food, suggest a wine) and "Ho il vino" (I have the wine, suggest food). The user describes their meal in free text, enters their city or region for local recommendations, and sets a per-bottle budget via a slider from €5 to €150+. GPT-4o processes the input and returns named wines with DOC/DOCG appellations, pairing rationale, tasting notes, local availability by specific supermarket chain (Coop, Conad, Esselunga), and price estimates.</p>
+          <p data-i18n="fl.what.p3">The Cronologia tab stores the full history of past queries — each entry shows the dish, the wine preview, and a timestamp, and clicking it reopens the full result in the sommelier. A persistent status bar below the navbar shows remaining free requests as a dot indicator, with a "Sblocca illimitato" button that triggers the Stripe Checkout when the free tier is exhausted.</p>
         </div>
 
         <div class="section-divider">· · · ◆ · · ·</div>
@@ -467,49 +463,58 @@
         <!-- WHY -->
         <div class="content" style="padding-top: 0; animation-delay: 0.5s;">
           <div class="section-label" data-i18n="section.why">Why</div>
-          <p data-i18n="fl.why.p1">Wine pairing is widely perceived as arcane expertise — the domain of sommeliers, not everyday diners. The vocabulary alone (tannins, minerality, terroir) creates a barrier that makes even an enthusiastic home cook hesitate to pick a bottle with confidence. Flavory's premise is that this knowledge can be encoded into software and served on demand.</p>
-          <p data-i18n-html="fl.why.p2">The landing page needed to carry the premium weight of the subject. A standard product page felt inadequate — wine is visual, sensory, and emotional. <strong>The decision to centre the page on a 300-frame scroll-scrubbed animation was deliberate:</strong> it communicates craft and seriousness before the user reads a single word. The Stripe integration signals that the pairing engine is a real service worth paying for, not a toy demo.</p>
-          <p data-i18n="fl.why.p3">Typographically, Playfair Display was chosen over a sans-serif specifically for its editorial, high-contrast letterforms — the same typeface you'd find on a wine label or a fine-dining menu. Every visual decision reinforces the same message: this product respects its subject.</p>
+          <p data-i18n="fl.why.p1">The idea came from a real frustration: standing in a wine aisle with no idea which bottle pairs with what you are cooking tonight. Online guides are generic, sommelier courses take months, and asking supermarket staff is inconsistent. GPT-4o changes the calculus — it has enough vinology and Italian regional knowledge to give specific, credible recommendations in seconds.</p>
+          <p data-i18n-html="fl.why.p2">The local dimension was critical. Italian wine culture is intensely regional — a Sangiovese di Romagna from Cantina San Patrignano is a completely different recommendation from a generic Chianti. <strong>Naming specific DOC/DOCG producers and pointing to where they are sold nearby makes the output actually actionable</strong>, not just educational. A pairing you can act on tonight is worth infinitely more than one you cannot.</p>
+          <p data-i18n="fl.why.p3">The freemium model — 3 free queries, then €9.99/month via Stripe — was a deliberate product decision. It lowers the barrier to try, lets the quality of the AI output speak for itself, and creates a natural conversion moment. Building a real payment flow, not a mock, was as much about learning product architecture as about the feature itself.</p>
         </div>
 
       </div>
       <div class="content-split-right">
-        <!-- placeholder: foto/flavory/phone-home.png — mobile view of the hero/navbar -->
-        <div class="split-photo split-photo--portrait"><img src="foto/flavory/phone-home.png" alt="Mobile view of Flavory homepage" loading="lazy"></div>
+        <!-- Mobile registration form — shows the auth UI and brand identity on small screens -->
+        <div class="split-photo split-photo--portrait"><img src="foto/flavory/registration-phoneview.jpeg" alt="Mobile registration form — Accedi / Registrati" loading="lazy"></div>
+        <!-- Cronologia tab — past pairing history with timestamps -->
+        <div class="split-photo split-photo--desktop"><img src="foto/flavory/cronologia.png" alt="Cronologia — pairing history with timestamped entries" loading="lazy"></div>
       </div>
     </div>
 
-    <!-- FEATURE ROW 1 -->
+    <!-- FEATURE ROW 1 — Typography & Design System -->
     <div class="feature-row">
       <div class="feature-text">
         <div class="feature-icon"></div>
-        <h3 data-i18n="fl.f1.ttl">Frame-by-Frame Scroll Animation</h3>
-        <p data-i18n="fl.f1.dsc">300 PNG frames are preloaded into an array of Image objects at page initialization — eagerly, not lazily, so the animation is never caught waiting mid-scroll. A requestAnimationFrame loop runs continuously, reading the current scrollY value and dividing it by the total scrollable height to produce a normalized progress value (0–1). This maps directly to a frame index (0–299), and the computed Image object's src is assigned to the visible &lt;img&gt; element. The video section is set to 150vh — taller than the viewport — giving a generous scroll range that translates into a smooth, unhurried playback speed. The result is a cinematic wine-pour sequence that the user literally controls with their hand.</p>
+        <h3 data-i18n="fl.f1.ttl">Typography &amp; Design System</h3>
+        <p data-i18n="fl.f1.dsc">Flavory's visual identity is built on a deliberate double-serif system. Playfair Display serves as the primary display typeface — its high-contrast thick-thin strokes and editorial character communicate the same sensibility found on a premium wine label or a fine-dining menu. The palette is equally restrained: deep crimson (#b22222) as the sole accent against a near-white cream (#fff2f2). This near-monochromatic warmth carries through every interactive surface: the custom dot cursor, text-selection highlight, login button, CTA background, hover states, and inline text emphasis. The result is a tight system — the sensation that every element was designed by the same hand, for the same purpose. The marketing sections reinforce this language at scale: the "Perché Flavory" feature list, the dark "Tre passi" section with its wave separator, and the dark CTA footer all speak the same visual dialect.</p>
       </div>
-      <!-- placeholder: foto/flavory/frames.png — screenshot showing the frame animation in action -->
-      <div class="feature-img"><img src="foto/flavory/frames.png" alt="Frame animation in action" loading="lazy"></div>
+      <div class="feature-img"><img src="foto/flavory/perche-section.png" alt="Perché Flavory section showing Playfair Display typography, crimson accents, and wine glass illustration" loading="lazy"></div>
     </div>
 
-    <!-- FEATURE ROW 2 (flipped) -->
-    <div class="feature-row" style="animation-delay: 0.55s;">
-      <!-- placeholder: foto/flavory/reveal.png — screenshot showing the dual panel slide-in reveal -->
-      <div class="feature-img"><img src="foto/flavory/reveal.png" alt="Dual panel content reveal" loading="lazy"></div>
+    <!-- FEATURE ROW 2 — AI Sommelier Interface (flipped) -->
+    <div class="feature-row reveal" style="animation-delay: 0.52s;">
+      <div class="feature-img"><img src="foto/flavory/flavory-aibot.png" alt="AI Sommelier dashboard — form with food/wine toggle, city input, budget slider" loading="lazy"></div>
       <div class="feature-text">
         <div class="feature-icon"></div>
-        <h3 data-i18n="fl.f2.ttl">Dual-Panel Intersection Observer Reveal</h3>
-        <p data-i18n="fl.f2.dsc">The two content panels inside the scroll-animation section — "L'arte del vino?" on the left and the Flavory description on the right — begin their lives off-screen: the left panel is positioned at translateX(-100%) with opacity 0, the right at translateX(100%) with opacity 0. An IntersectionObserver watches the video section container. When the container crosses the viewport threshold, both panels receive the .show class simultaneously, triggering a 1-second CSS ease transition that brings them to translateX(0%) and opacity 1. When the section leaves the viewport on scroll-back, the class is removed and the panels retreat — the animation is fully reversible and replays every time the section enters view.</p>
+        <h3 data-i18n="fl.f2.ttl">AI Sommelier Interface</h3>
+        <p data-i18n="fl.f2.dsc">The sommelier form collects three contextual inputs: a free-text meal description (anything from "pizza margherita" to a full multi-course menu), a city or region for local wine sourcing, and a per-bottle budget set via a range slider from €5 to €150+. A mode toggle at the top flips the pairing direction — "Ho il cibo" sends food → wine, "Ho il vino" sends wine → food. A camera icon in the textarea allows photo input for the meal. The left panel occupies roughly a third of the screen width; the right two-thirds is the output area, which shows a subtle wine-glass icon in its empty state and fills with the full recommendation when a query is submitted. The freemium counter sits in a persistent bar just below the tab navigation, showing remaining free requests as red dots alongside the "Sblocca illimitato" upsell button.</p>
       </div>
     </div>
 
-    <!-- FEATURE ROW 3 -->
-    <div class="feature-row reveal">
+    <!-- FEATURE ROW 3 — GPT-4o Output Quality -->
+    <div class="feature-row reveal" style="animation-delay: 0.54s;">
       <div class="feature-text">
         <div class="feature-icon"></div>
-        <h3 data-i18n="fl.f3.ttl">Node.js / Express Backend with Auth &amp; Stripe</h3>
-        <p data-i18n="fl.f3.dsc">Behind the landing surface sits a complete Express server. The authentication layer uses bcryptjs for password hashing at registration and comparison at login, with jsonwebtoken generating signed JWT tokens on success. cookie-parser reads and writes session cookies across requests. A dotenv configuration layer keeps environment secrets (JWT secret, Stripe keys, database credentials) out of the codebase. The Stripe integration adds a payment layer — suggesting that the core pairing engine, personalized recommendations, or saved pairing history are gated behind a subscription or one-time purchase. nodemon handles hot-reloading during development.</p>
+        <h3 data-i18n="fl.f3.ttl">GPT-4o Powered Recommendations</h3>
+        <p data-i18n="fl.f3.dsc">The backend constructs a structured prompt from the user's three inputs — meal, location, budget — and sends it to the OpenAI GPT-4o API. The response is rendered in the right panel as a structured wine recommendation: each suggested wine includes its full DOC/DOCG appellation and producer name, a "Perché quest'abbinamento" pairing rationale section, tasting characteristics, a "Dove trovarlo" section naming specific local supermarkets and enoteche, and a price estimate. For a query of "cappelletti al ragù" from Ravenna at €30, the model recommends a Sangiovese di Romagna Superiore DOC from Cantina San Patrignano — a real local producer — alongside a Lambrusco Grasparossa di Castelvetro DOC. Getting this quality of output consistently required careful prompt engineering: the region parameter anchors the model to real Italian producers and prevents hallucinated appellations.</p>
       </div>
-      <!-- placeholder: foto/flavory/backend.png — diagram or screenshot of API/auth flow -->
-      <div class="feature-img"><img src="foto/flavory/backend.png" alt="Backend architecture and auth flow" loading="lazy"></div>
+      <div class="feature-img"><img src="foto/flavory/aibot-in-function.png" alt="GPT-4o output showing wine recommendation with DOC appellation, pairing rationale, and local sourcing" loading="lazy"></div>
+    </div>
+
+    <!-- FEATURE ROW 4 — Freemium Model & Stripe (flipped) -->
+    <div class="feature-row reveal" style="animation-delay: 0.56s;">
+      <div class="feature-img"><img src="foto/flavory/payment.png" alt="Stripe Checkout — Abbonati a Flavory Mensile at €9.99/month" loading="lazy"></div>
+      <div class="feature-text">
+        <div class="feature-icon"></div>
+        <h3 data-i18n="fl.f4.ttl">Freemium Model &amp; Stripe Subscription</h3>
+        <p data-i18n="fl.f4.dsc">New users receive 3 free AI queries — tracked server-side and displayed in the UI as a dot indicator ("3 richieste gratuite rimaste"). When the limit is reached, "Sblocca illimitato" triggers a hosted Stripe Checkout session: branded with the Flavory name, priced at €9,99/month ("Flavory Mensile — addebito mensile"), with full card entry, promo code support, and Stripe Link for one-click payment. The integration is built server-side through Express: the backend creates the Checkout Session and returns the hosted URL — no card data ever touches the application server. Successful payment upgrades the user's subscription status in the database, lifting the request cap entirely. The subscription is managed via the Abbonamento tab inside the app.</p>
+      </div>
     </div>
 
     <div class="section-divider">· · · ◆ · · ·</div>
@@ -519,14 +524,13 @@
       <div class="content" style="padding-top: 0; animation-delay: 0.6s;">
         <div class="section-label" data-i18n="section.outcome">Outcome</div>
         <h2 data-i18n="outcome.h1">What shipped</h2>
-        <p data-i18n="fl.out.p1">A complete marketing landing page and backend scaffolding: sticky navbar with logo, three navigation links and a Login CTA; a full-viewport hero section with the Flavory wordmark, tagline and branded typography; a 150vh scroll-animation section with 300-frame cinematic playback and dual slide-in content panels; a discovery section with editorial copy, image-and-text layout, and a primary CTA button; a copyright footer. The Node.js/Express backend includes user registration and login routes, JWT token generation and verification middleware, bcryptjs password hashing, cookie-parser session management, Stripe payment integration endpoints, and a dotenv environment configuration layer. A custom crimson dot cursor and red selection highlight complete the brand identity across the full page experience.</p>
+        <p data-i18n="fl.out.p1">A complete SaaS product from landing to checkout: a marketing landing page with Perché Flavory feature list (Sommelier AI powered by GPT-4o, Locale &amp; Regionale DOC/DOCG recommendations, Anche al Supermercato sourcing), a "Tre passi verso il vino perfetto" how-it-works section, a dark CTA footer, and a full footer with product, account, and legal columns. Inside the authenticated app: three-tab dashboard (Sommelier, Cronologia, Abbonamento), dual food/wine pairing mode, city and budget inputs, GPT-4o recommendation output with named producers and local sourcing, timestamped pairing history that reopens in the sommelier with one click, freemium request counter with live dot indicators, and a live Stripe Checkout subscription at €9.99/month. Authentication via JWT and bcryptjs on a Node.js/Express backend. Fully responsive — the entire app adapts to mobile with the same three-tab structure.</p>
         <h2 data-i18n="outcome.h2">What I learned</h2>
-        <p data-i18n-html="fl.out.p2">Preloading 300 images at page load is deceptively simple in code but consequential in production. Each new Image() call initiates a fetch immediately — on a slow mobile connection, this floods the network before the user sees anything meaningful. A production-grade version would need progressive frame buffering (preload only the next N frames in a sliding window) or a dedicated frame-streaming CDN strategy. I also identified a subtle inefficiency: the requestAnimationFrame loop runs on every tick regardless of whether scrollY has changed, causing unnecessary re-renders even when the page is idle. <strong>The fix is a frame-skip guard: compare the new computed frame index against the last rendered one and bail early if they match.</strong> These are the optimisations that separate a polished product from a working prototype.</p>
-        <p data-i18n="fl.out.p3">On the design side, this project reinforced the power of typographic consistency as a branding signal. Playfair Display, the crimson accent, and the cream background aren't decorative choices — they're trust-building. Every element speaks the same visual language, and that coherence is what makes the product feel premium before you even read the copy. The micro-details — cursor colour, text-selection highlight, hover state transitions — compound into an experience that feels intentional from edge to edge.</p>
+        <p data-i18n-html="fl.out.p2">The most technically demanding part was not the backend or the payment flow — it was the prompt. A wine recommendation needs specific structure to be useful: appellation, producer, pairing rationale, tasting notes, where to buy, price. Getting GPT-4o to produce all of this reliably — without hallucinating fake producers or inventing non-existent DOC labels — required significant iteration. <strong>The region parameter was the key unlock:</strong> anchoring the model to a specific Italian city forced it to name real local producers and actual supermarkets, transforming the output from generic wine-guide content into something genuinely actionable.</p>
+        <p data-i18n="fl.out.p3">The freemium design also taught me that the paywall placement is a product decision with real consequences. Too early and you lose users before they experience the value; too late and the conversion moment feels abrupt. Three free queries was the number that felt right — enough to get one full meal recommendation and experience the quality, but not so many that there is no reason to subscribe. These are the kinds of decisions that have no technical solution; they require thinking like a product designer, not just a developer.</p>
       </div>
       <div class="outcome-right">
-        <!-- placeholder: foto/flavory/phone-pairing.png — mobile view of the pairing/discovery section -->
-        <div class="split-photo split-photo--portrait"><img src="foto/flavory/phone-pairing.png" alt="Mobile view of pairing section" loading="lazy"></div>
+        <div class="split-photo split-photo--portrait"><img src="foto/flavory/aibot-phoneview.jpeg" alt="Mobile view of the AI Sommelier — Sommelier / Cronologia / Abbonamento tabs" loading="lazy"></div>
       </div>
     </div>
 

@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flavory — Ceban Marius</title>
+  <meta name="description" content="Flavory — A food and wine pairing web application. Scroll-based cinematic frame animation across 300 preloaded PNG frames, Intersection Observer content reveals, and a Node.js/Express backend with JWT authentication and Stripe integration." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Flavory — Ceban Marius" />
+  <meta property="og:description" content="A food and wine pairing web application. Scroll-based cinematic frame animation across 300 preloaded PNG frames, Intersection Observer content reveals, and a Node.js/Express backend with JWT authentication and Stripe integration." />
+  <meta property="og:site_name" content="Ceban Marius — Portfolio" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23111'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='monospace' font-size='14' font-weight='bold' fill='%23e8e6e1'%3Ecm%3C/text%3E%3C/svg%3E" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;700&display=swap" rel="stylesheet"/>
+  <script>
+    (function() {
+      const t = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', t);
+    })();
+  </script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:       #f0eeea;
+      --fg:       #111;
+      --muted:    #888;
+      --subtle:   #bbb;
+      --border:   #d5d3cf;
+      --card-bg:  #e5e3df;
+      --line:     #aaa;
+    }
+    [data-theme="dark"] {
+      --bg:       #0e0e0e;
+      --fg:       #e8e6e1;
+      --muted:    #888;
+      --subtle:   #555;
+      --border:   #1e1e1e;
+      --card-bg:  #1a1a1a;
+      --line:     #2a2a2a;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--fg);
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 300;
+      line-height: 1.7;
+      transition: background 0.4s, color 0.4s;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    @media (hover: hover) and (pointer: fine) {
+      html, * { cursor: none !important; }
+    }
+    #cursor-dot {
+      position: fixed; left: 0; top: 0;
+      width: 6px; height: 6px;
+      background: var(--fg); border-radius: 50%;
+      pointer-events: none; z-index: 100000;
+      transform: translate(-50%,-50%);
+      box-shadow: 0 0 0 2px var(--bg);
+    }
+    #cursor-line {
+      position: fixed; left: 0; top: 0;
+      width: 1px; height: 26px;
+      background: var(--fg); opacity: 0.5;
+      pointer-events: none; z-index: 99999;
+      transform: translate(-50%,-50%);
+    }
+    /* ── META LINK ── */
+    .meta-link { color: var(--fg); text-decoration: none; transition: opacity 0.2s; }
+    .meta-link:hover { opacity: 0.7; }
+
+    /* ── HEADER ── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg);
+      z-index: 100;
+      transition: background 0.4s, border-color 0.4s;
+    }
+    .header-left { display: flex; align-items: center; gap: 20px; }
+    .back-link {
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .back-link:hover { color: var(--fg); }
+    .breadcrumb {
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      color: var(--subtle);
+    }
+    .breadcrumb span { color: var(--fg); }
+
+    .theme-toggle {
+      background: none; border: none; cursor: pointer;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .toggle-track {
+      width: 30px; height: 17px; border-radius: 9px;
+      border: 1px solid var(--line); background: transparent;
+      position: relative; transition: border-color 0.3s;
+    }
+    .toggle-dot {
+      position: absolute; top: 3px; left: 3px;
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--fg);
+      transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), background 0.3s;
+    }
+    [data-theme="dark"] .toggle-dot { transform: translateX(13px); }
+    .toggle-label {
+      font-size: 9px; letter-spacing: 0.1em; color: var(--muted);
+      font-family: 'IBM Plex Mono', monospace;
+    }
+    .header-right { display: flex; align-items: center; gap: 16px; }
+    .lang-toggle {
+      background: none; border: none; cursor: pointer;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px; letter-spacing: 0.1em;
+      color: var(--muted); transition: color 0.2s; padding: 0;
+    }
+    .lang-toggle:hover { color: var(--fg); }
+
+    /* ── MAIN ── */
+    main { padding-top: 52px; }
+
+    /* ── HERO SECTION ── */
+    .project-hero {
+      padding: 80px 40px 64px;
+      max-width: 720px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.1s forwards;
+    }
+    .project-tag {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+    }
+    .project-hero h1 {
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      margin-bottom: 24px;
+    }
+    .project-hero .lead {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 540px;
+    }
+
+    /* ── META ROW ── */
+    .project-meta {
+      display: flex;
+      gap: 48px;
+      padding: 32px 40px;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.25s forwards;
+    }
+    .meta-label {
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .meta-value {
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── IMAGE STRIP ── */
+    .image-strip {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 0 40px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.35s forwards;
+    }
+    .image-strip::-webkit-scrollbar { display: none; }
+    .strip-img {
+      flex-shrink: 0;
+      width: 400px;
+      height: 280px;
+      background: var(--card-bg);
+      transition: background 0.4s;
+    }
+    .strip-img:first-child { width: 560px; }
+
+    /* ── CONTENT SECTIONS ── */
+    .content {
+      padding: 80px 40px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.45s forwards;
+    }
+    .section-label {
+      font-size: 9px;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .content h2 {
+      font-size: 18px;
+      font-weight: 400;
+      margin-bottom: 16px;
+      margin-top: 48px;
+    }
+    .content h2:first-of-type { margin-top: 0; }
+    .content p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.9;
+      margin-bottom: 20px;
+    }
+    .content p strong {
+      color: var(--fg);
+      font-weight: 400;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      color: var(--subtle);
+      padding: 48px 0;
+    }
+
+    /* ── FEATURE ROWS ── */
+    .feature-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2px;
+      margin: 0 0 2px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease 0.5s forwards;
+    }
+    .feature-text {
+      padding: 48px 40px;
+      background: var(--card-bg);
+      transition: background 0.4s;
+    }
+    .feature-text .feature-icon {
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+    .feature-text h3 {
+      font-size: 13px;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
+    .feature-text p {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .feature-img {
+      background: var(--card-bg);
+      min-height: 280px;
+      transition: background 0.4s;
+    }
+
+    /* ── NEXT PROJECT ── */
+    .next-project {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px;
+      border-top: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--fg);
+      transition: background 0.2s;
+      opacity: 0;
+      animation: fadeUp 0.5s ease 0.6s forwards;
+    }
+    .next-project:hover { background: var(--card-bg); }
+    .next-label { font-size: 9px; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 6px; }
+    .next-title { font-size: 18px; font-weight: 300; }
+    .next-arrow { font-size: 24px; color: var(--muted); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      header { padding: 0 16px; height: 44px; }
+      .breadcrumb { display: none; }
+      .project-hero { padding: 40px 20px 36px; }
+      .project-hero h1 { font-size: 28px; }
+      .project-meta { padding: 20px; gap: 24px; flex-wrap: wrap; }
+      .strip-img { width: 300px; height: 220px; }
+      .strip-img:first-child { width: 380px; }
+      .content { padding: 48px 20px; }
+      .feature-row { grid-template-columns: 1fr; }
+      .feature-img { min-height: 200px; }
+      .next-project { padding: 28px 20px; }
+    }
+    .strip-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; opacity: 0.035; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 200px 200px; }
+    .feature-img { position: relative; background-size: cover; background-position: center; overflow: hidden; cursor: zoom-in; }
+    .feature-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+    .strip-img { position: relative; overflow: hidden; cursor: zoom-in; }
+    .content-split-left .content { max-width: none; }
+    .content-split-right { display: flex; flex-direction: column; gap: 8px; }
+    .split-photo { background: var(--card-bg); background-size: cover; background-position: center; overflow: hidden; cursor: zoom-in; transition: opacity 0.3s, background 0.4s; flex-shrink: 0; position: relative; }
+    .split-photo:hover { opacity: 0.82; }
+    .split-photo--desktop { width: 100%; aspect-ratio: 16/9; }
+    .split-photo--portrait { width: 100%; aspect-ratio: 9/16; }
+    .split-photo img { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+    .outcome-split { display: block; }
+    .outcome-right { display: none; }
+    .lightbox { position: fixed; inset: 0; background: rgba(0,0,0,0.93); z-index: 2000; display: none; align-items: center; justify-content: center; }
+    .lightbox.active { display: flex; }
+    .lightbox-close { position: absolute; top: 20px; right: 28px; background: none; border: none; color: rgba(255,255,255,0.65); font-size: 11px; letter-spacing: 0.12em; cursor: pointer; font-family: 'IBM Plex Mono', monospace; transition: color 0.2s; padding: 8px; }
+    .lightbox-close:hover { color: #fff; }
+    .lightbox-img { max-width: 92vw; max-height: 90vh; object-fit: contain; display: block; user-select: none; }
+    @media (min-width: 601px) {
+      .content-split { display: grid; grid-template-columns: 1fr 280px; }
+      .content-split-left { border-right: 1px solid var(--border); }
+      .content-split-left .content { max-width: none; padding-right: 20px; }
+      .content-split-right { padding: 24px 20px; position: sticky; top: 52px; align-self: start; overflow: visible; }
+      .outcome-split { display: grid; grid-template-columns: 1fr 280px; }
+      .outcome-right { border-left: 1px solid var(--border); display: flex; align-items: stretch; }
+      .outcome-right .split-photo { flex: 1; width: 100%; }
+    }
+    @media (max-width: 600px) {
+      .content-split-right { position: static; max-height: none; flex-direction: row; overflow-x: auto; overflow-y: hidden; padding: 20px; border-top: 1px solid var(--border); gap: 16px; }
+      .split-photo--desktop { width: 220px; flex-shrink: 0; }
+      .split-photo--portrait { width: 160px; aspect-ratio: 9/16; height: auto; flex: none; }
+      .outcome-right { display: flex; overflow-x: auto; scrollbar-width: none; border-top: 1px solid var(--border); padding: 20px; }
+      .outcome-right .split-photo { width: 200px; aspect-ratio: 9/16; height: auto; flex-shrink: 0; }
+    }
+    /* ── READING PROGRESS ── */
+    #reading-progress {
+      position: absolute; bottom: 0; left: 0; width: 0%; height: 2px;
+      background: var(--fg); pointer-events: none;
+      transition: width 0.1s linear;
+    }
+    /* ── BACK TO TOP ── */
+    #back-to-top {
+      position: fixed; bottom: 32px; right: 32px;
+      background: none; border: 1px solid var(--border);
+      color: var(--fg); font-family: 'IBM Plex Mono', monospace;
+      font-size: 9px; letter-spacing: 0.1em;
+      padding: 10px 14px; cursor: pointer;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.3s, background 0.2s, color 0.4s, border-color 0.4s;
+      z-index: 500;
+    }
+    #back-to-top.visible { opacity: 1; pointer-events: all; }
+    #back-to-top:hover { background: var(--fg); color: var(--bg); }
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .reveal.in-view { opacity: 1; transform: translateY(0); }
+    /* ── PORTFOLIO STATUS ── */
+    .status-portfolio { display: inline-flex; align-items: center; gap: 7px; }
+    .status-dot-portfolio {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--muted); flex-shrink: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor-dot"></div>
+  <div id="cursor-line"></div>
+  <div id="pt-overlay" style="position:fixed;inset:0;z-index:99999;display:flex;overflow:hidden;pointer-events:none;background:#111;"></div>
+  <div class="noise-overlay"></div>
+
+  <header>
+    <div class="header-left">
+      <a href="projects.html" class="back-link" data-nav data-i18n="back.projects">← PROJECTS</a>
+      <span class="breadcrumb" data-i18n-html="fl.crumb">CEBAN MARIUS / PROJECTS / <span>FLAVORY</span></span>
+    </div>
+    <div class="header-right">
+      <button class="lang-toggle" onclick="toggleLang()" id="lang-toggle-label">IT</button>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <div class="toggle-track"><div class="toggle-dot"></div></div>
+        <span class="toggle-label" id="toggle-label">DARK</span>
+      </button>
+    </div>
+    <div id="reading-progress"></div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <div class="project-hero">
+      <div class="project-tag" data-i18n="fl.tag">06 — Full Stack Development</div>
+      <h1>Flavory.</h1>
+      <p class="lead" data-i18n="fl.lead">A food and wine pairing web application — scroll-based cinematic frame animation across 300 preloaded PNG frames, Intersection Observer content reveals, and a Node.js/Express backend with JWT authentication and Stripe payment integration.</p>
+    </div>
+
+    <!-- META -->
+    <div class="project-meta">
+      <div class="meta-item">
+        <div class="meta-label" data-i18n="meta.role">Role</div>
+        <div class="meta-value" data-i18n="fl.role">Designer &amp; Developer</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label" data-i18n="meta.year">Year</div>
+        <div class="meta-value">2023</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label" data-i18n="meta.stack">Stack</div>
+        <div class="meta-value">HTML/CSS/JS, Node.js, Express, JWT, Stripe</div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label" data-i18n="meta.status">Status</div>
+        <div class="meta-value"><span class="status-portfolio"><span class="status-dot-portfolio"></span><span data-i18n="fl.status">Portfolio Project</span></span></div>
+      </div>
+      <div class="meta-item">
+        <div class="meta-label" data-i18n="meta.github">GitHub</div>
+        <div class="meta-value"><a href="https://github.com/MariusCeb/flavory" class="meta-link" target="_blank" data-i18n="meta.view_src">View Source ↗</a></div>
+      </div>
+    </div>
+
+    <!-- IMAGE STRIP — add screenshots here -->
+    <div class="image-strip">
+      <!-- placeholder: foto/flavory/hero.png — hero section with Flavory wordmark -->
+      <div class="strip-img"><img src="foto/flavory/hero.png" alt="Flavory hero section" loading="lazy"></div>
+      <!-- placeholder: foto/flavory/scroll-anim.png — scroll animation section mid-play -->
+      <div class="strip-img"><img src="foto/flavory/scroll-anim.png" alt="Scroll animation section" loading="lazy"></div>
+      <!-- placeholder: foto/flavory/pairing.png — pairing discovery section -->
+      <div class="strip-img"><img src="foto/flavory/pairing.png" alt="Pairing discovery section" loading="lazy"></div>
+    </div>
+
+    <!-- CONTENT SPLIT -->
+    <div class="content-split">
+      <div class="content-split-left">
+
+        <!-- WHAT -->
+        <div class="content">
+          <div class="section-label" data-i18n="section.what">What</div>
+          <p data-i18n-html="fl.what.p1"><strong>Flavory is a full-stack web application built to make food and wine pairing accessible to everyone.</strong> The landing page is structured around three distinct sections: an editorial hero with the Flavory wordmark and tagline ("Where Every Flavor Finds Its Perfect Pairing"), a 150vh scroll-animation section where a cinematic wine sequence plays frame by frame tied to scroll position, and a discovery section with editorial copy and a primary CTA leading into the application itself.</p>
+          <p data-i18n="fl.what.p2">The application runs on a Node.js/Express backend that handles user authentication with JWT tokens and bcryptjs password hashing, cookie-based session management, and a Stripe payment integration — indicating a premium pairing engine behind the marketing surface. The frontend is built in pure HTML, CSS, and vanilla JavaScript, using Playfair Display typography and a warm crimson-cream palette (#b22222 / #fff2f2) that reflects the subject matter.</p>
+          <p data-i18n="fl.what.p3">Users navigate the site via a sticky top navbar with logo, three section links (Home, Menu, Wine), and a Login CTA button. A custom crimson dot cursor and red text-selection highlight reinforce the brand identity down to the micro-interaction level.</p>
+        </div>
+
+        <div class="section-divider">· · · ◆ · · ·</div>
+
+        <!-- WHY -->
+        <div class="content" style="padding-top: 0; animation-delay: 0.5s;">
+          <div class="section-label" data-i18n="section.why">Why</div>
+          <p data-i18n="fl.why.p1">Wine pairing is widely perceived as arcane expertise — the domain of sommeliers, not everyday diners. The vocabulary alone (tannins, minerality, terroir) creates a barrier that makes even an enthusiastic home cook hesitate to pick a bottle with confidence. Flavory's premise is that this knowledge can be encoded into software and served on demand.</p>
+          <p data-i18n-html="fl.why.p2">The landing page needed to carry the premium weight of the subject. A standard product page felt inadequate — wine is visual, sensory, and emotional. <strong>The decision to centre the page on a 300-frame scroll-scrubbed animation was deliberate:</strong> it communicates craft and seriousness before the user reads a single word. The Stripe integration signals that the pairing engine is a real service worth paying for, not a toy demo.</p>
+          <p data-i18n="fl.why.p3">Typographically, Playfair Display was chosen over a sans-serif specifically for its editorial, high-contrast letterforms — the same typeface you'd find on a wine label or a fine-dining menu. Every visual decision reinforces the same message: this product respects its subject.</p>
+        </div>
+
+      </div>
+      <div class="content-split-right">
+        <!-- placeholder: foto/flavory/phone-home.png — mobile view of the hero/navbar -->
+        <div class="split-photo split-photo--portrait"><img src="foto/flavory/phone-home.png" alt="Mobile view of Flavory homepage" loading="lazy"></div>
+      </div>
+    </div>
+
+    <!-- FEATURE ROW 1 -->
+    <div class="feature-row">
+      <div class="feature-text">
+        <div class="feature-icon"></div>
+        <h3 data-i18n="fl.f1.ttl">Frame-by-Frame Scroll Animation</h3>
+        <p data-i18n="fl.f1.dsc">300 PNG frames are preloaded into an array of Image objects at page initialization — eagerly, not lazily, so the animation is never caught waiting mid-scroll. A requestAnimationFrame loop runs continuously, reading the current scrollY value and dividing it by the total scrollable height to produce a normalized progress value (0–1). This maps directly to a frame index (0–299), and the computed Image object's src is assigned to the visible &lt;img&gt; element. The video section is set to 150vh — taller than the viewport — giving a generous scroll range that translates into a smooth, unhurried playback speed. The result is a cinematic wine-pour sequence that the user literally controls with their hand.</p>
+      </div>
+      <!-- placeholder: foto/flavory/frames.png — screenshot showing the frame animation in action -->
+      <div class="feature-img"><img src="foto/flavory/frames.png" alt="Frame animation in action" loading="lazy"></div>
+    </div>
+
+    <!-- FEATURE ROW 2 (flipped) -->
+    <div class="feature-row" style="animation-delay: 0.55s;">
+      <!-- placeholder: foto/flavory/reveal.png — screenshot showing the dual panel slide-in reveal -->
+      <div class="feature-img"><img src="foto/flavory/reveal.png" alt="Dual panel content reveal" loading="lazy"></div>
+      <div class="feature-text">
+        <div class="feature-icon"></div>
+        <h3 data-i18n="fl.f2.ttl">Dual-Panel Intersection Observer Reveal</h3>
+        <p data-i18n="fl.f2.dsc">The two content panels inside the scroll-animation section — "L'arte del vino?" on the left and the Flavory description on the right — begin their lives off-screen: the left panel is positioned at translateX(-100%) with opacity 0, the right at translateX(100%) with opacity 0. An IntersectionObserver watches the video section container. When the container crosses the viewport threshold, both panels receive the .show class simultaneously, triggering a 1-second CSS ease transition that brings them to translateX(0%) and opacity 1. When the section leaves the viewport on scroll-back, the class is removed and the panels retreat — the animation is fully reversible and replays every time the section enters view.</p>
+      </div>
+    </div>
+
+    <!-- FEATURE ROW 3 -->
+    <div class="feature-row reveal">
+      <div class="feature-text">
+        <div class="feature-icon"></div>
+        <h3 data-i18n="fl.f3.ttl">Node.js / Express Backend with Auth &amp; Stripe</h3>
+        <p data-i18n="fl.f3.dsc">Behind the landing surface sits a complete Express server. The authentication layer uses bcryptjs for password hashing at registration and comparison at login, with jsonwebtoken generating signed JWT tokens on success. cookie-parser reads and writes session cookies across requests. A dotenv configuration layer keeps environment secrets (JWT secret, Stripe keys, database credentials) out of the codebase. The Stripe integration adds a payment layer — suggesting that the core pairing engine, personalized recommendations, or saved pairing history are gated behind a subscription or one-time purchase. nodemon handles hot-reloading during development.</p>
+      </div>
+      <!-- placeholder: foto/flavory/backend.png — diagram or screenshot of API/auth flow -->
+      <div class="feature-img"><img src="foto/flavory/backend.png" alt="Backend architecture and auth flow" loading="lazy"></div>
+    </div>
+
+    <div class="section-divider">· · · ◆ · · ·</div>
+
+    <!-- OUTCOME -->
+    <div class="outcome-split">
+      <div class="content" style="padding-top: 0; animation-delay: 0.6s;">
+        <div class="section-label" data-i18n="section.outcome">Outcome</div>
+        <h2 data-i18n="outcome.h1">What shipped</h2>
+        <p data-i18n="fl.out.p1">A complete marketing landing page and backend scaffolding: sticky navbar with logo, three navigation links and a Login CTA; a full-viewport hero section with the Flavory wordmark, tagline and branded typography; a 150vh scroll-animation section with 300-frame cinematic playback and dual slide-in content panels; a discovery section with editorial copy, image-and-text layout, and a primary CTA button; a copyright footer. The Node.js/Express backend includes user registration and login routes, JWT token generation and verification middleware, bcryptjs password hashing, cookie-parser session management, Stripe payment integration endpoints, and a dotenv environment configuration layer. A custom crimson dot cursor and red selection highlight complete the brand identity across the full page experience.</p>
+        <h2 data-i18n="outcome.h2">What I learned</h2>
+        <p data-i18n-html="fl.out.p2">Preloading 300 images at page load is deceptively simple in code but consequential in production. Each new Image() call initiates a fetch immediately — on a slow mobile connection, this floods the network before the user sees anything meaningful. A production-grade version would need progressive frame buffering (preload only the next N frames in a sliding window) or a dedicated frame-streaming CDN strategy. I also identified a subtle inefficiency: the requestAnimationFrame loop runs on every tick regardless of whether scrollY has changed, causing unnecessary re-renders even when the page is idle. <strong>The fix is a frame-skip guard: compare the new computed frame index against the last rendered one and bail early if they match.</strong> These are the optimisations that separate a polished product from a working prototype.</p>
+        <p data-i18n="fl.out.p3">On the design side, this project reinforced the power of typographic consistency as a branding signal. Playfair Display, the crimson accent, and the cream background aren't decorative choices — they're trust-building. Every element speaks the same visual language, and that coherence is what makes the product feel premium before you even read the copy. The micro-details — cursor colour, text-selection highlight, hover state transitions — compound into an experience that feels intentional from edge to edge.</p>
+      </div>
+      <div class="outcome-right">
+        <!-- placeholder: foto/flavory/phone-pairing.png — mobile view of the pairing/discovery section -->
+        <div class="split-photo split-photo--portrait"><img src="foto/flavory/phone-pairing.png" alt="Mobile view of pairing section" loading="lazy"></div>
+      </div>
+    </div>
+
+    <!-- NEXT PROJECT -->
+    <a href="donkey.html" class="next-project" data-nav>
+      <div>
+        <div class="next-label" data-i18n="next.label">NEXT PROJECT</div>
+        <div class="next-title" data-i18n="fl.next">Donkey Joe →</div>
+      </div>
+      <span class="next-arrow">↗</span>
+    </a>
+
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div id="lightbox" class="lightbox" onclick="if(event.target===this)closeLightbox()">
+    <button class="lightbox-close" onclick="closeLightbox()" data-i18n="lightbox.close">✕ CLOSE</button>
+    <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+  </div>
+
+  <script src="i18n.js"></script>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme') || 'light';
+      document.getElementById('toggle-label').textContent = saved === 'dark' ? 'LIGHT' : 'DARK';
+    })();
+
+    function toggleTheme() {
+      const html = document.documentElement;
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      const next = isDark ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      document.getElementById('toggle-label').textContent = isDark ? 'DARK' : 'LIGHT';
+    }
+
+    /* ── PAGE TRANSITION ── */
+    (function() {
+      var N = 14, STAGGER = 0.032, DUR = 0.46;
+      var overlay = document.getElementById('pt-overlay');
+      var blocks = [];
+      overlay.style.background = 'none';
+      for (var i = 0; i < N; i++) {
+        var b = document.createElement('div');
+        b.style.cssText = 'flex:1;height:100%;background:#111;transform:scaleX(1);transform-origin:right center;';
+        overlay.appendChild(b); blocks.push(b);
+      }
+      function init() {
+        setTimeout(function() {
+          blocks.forEach(function(b, i) {
+            b.style.transition = 'transform '+DUR+'s cubic-bezier(0.76,0,0.24,1) '+(i*STAGGER)+'s';
+            b.style.transform = 'scaleX(0)';
+          });
+          setTimeout(function() { overlay.style.pointerEvents = 'none'; }, (DUR+(N-1)*STAGGER)*1000+200);
+        }, 30);
+        document.querySelectorAll('[data-nav]').forEach(function(el) {
+          el.addEventListener('click', function(e) {
+            var href = this.getAttribute('href');
+            if (!href || href === '#') return;
+            e.preventDefault();
+            overlay.style.pointerEvents = 'all';
+            blocks.forEach(function(b, i) {
+              b.style.transformOrigin = 'left center';
+              b.style.transition = 'transform '+DUR+'s cubic-bezier(0.76,0,0.24,1) '+(i*STAGGER)+'s';
+              b.style.transform = 'scaleX(1)';
+            });
+            setTimeout(function() { window.location.href = href; }, (DUR+(N-1)*STAGGER)*1000-80);
+          });
+        });
+      }
+      if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+      window.addEventListener('pageshow', function(e) {
+        if (!e.persisted) return;
+        overlay.style.pointerEvents = 'all';
+        blocks.forEach(function(b) { b.style.transition = 'none'; b.style.transformOrigin = 'right center'; b.style.transform = 'scaleX(1)'; });
+        setTimeout(function() {
+          blocks.forEach(function(b, i) {
+            b.style.transition = 'transform '+DUR+'s cubic-bezier(0.76,0,0.24,1) '+(i*STAGGER)+'s';
+            b.style.transform = 'scaleX(0)';
+          });
+          setTimeout(function() { overlay.style.pointerEvents = 'none'; }, (DUR+(N-1)*STAGGER)*1000+200);
+        }, 50);
+      });
+    })();
+    /* ── CURSOR ── */
+    (function() {
+      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+      var dot = document.getElementById('cursor-dot');
+      var line = document.getElementById('cursor-line');
+      if (!dot || !line) return;
+      var mx = -200, my = -200, lx = -200, ly = -200;
+      document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
+      var magnets = document.querySelectorAll('a, button');
+      (function tick() {
+        var tx = mx, ty = my;
+        for (var i = 0; i < magnets.length; i++) {
+          var r = magnets[i].getBoundingClientRect();
+          var cx = r.left + r.width * 0.5, cy = r.top + r.height * 0.5;
+          var d = Math.sqrt((mx-cx)*(mx-cx)+(my-cy)*(my-cy));
+          if (d < 80) { var s = (1-d/80)*0.28; tx += (cx-mx)*s; ty += (cy-my)*s; }
+        }
+        dot.style.left = tx+'px'; dot.style.top = ty+'px';
+        lx += (mx-lx)*0.12; ly += (my-ly)*0.12;
+        var angle = Math.atan2(my-ly, mx-lx)*180/Math.PI+90;
+        line.style.left = lx+'px'; line.style.top = ly+'px';
+        line.style.transform = 'translate(-50%,-50%) rotate('+angle+'deg)';
+        requestAnimationFrame(tick);
+      })();
+    })();
+    // Lightbox
+    function openLightbox(src) {
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('lightbox').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeLightbox() {
+      document.getElementById('lightbox').classList.remove('active');
+      document.getElementById('lightboxImg').src = '';
+      document.body.style.overflow = '';
+    }
+    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
+    document.querySelectorAll('.strip-img, .feature-img, .split-photo').forEach(el => {
+      el.addEventListener('click', function() {
+        const img = this.querySelector('img');
+        if (img && img.src) { openLightbox(img.src); return; }
+        const bg = window.getComputedStyle(this).backgroundImage;
+        const m = bg.match(/url\(["']?([^"')]+)["']?\)/);
+        if (m && m[1]) openLightbox(m[1]);
+      });
+    });
+    /* ── SCROLL REVEAL ── */
+    (function() {
+      var items = document.querySelectorAll('.reveal');
+      if (!items.length) return;
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) { e.target.classList.add('in-view'); obs.unobserve(e.target); } });
+      }, { threshold: 0.1 });
+      items.forEach(function(el) { obs.observe(el); });
+    })();
+    /* ── READING PROGRESS ── */
+    (function() {
+      var bar = document.getElementById('reading-progress');
+      if (!bar) return;
+      window.addEventListener('scroll', function() {
+        var s = window.scrollY, t = document.documentElement.scrollHeight - window.innerHeight;
+        bar.style.width = (t > 0 ? s / t * 100 : 0) + '%';
+      }, { passive: true });
+    })();
+    /* ── BACK TO TOP ── */
+    (function() {
+      var btn = document.getElementById('back-to-top');
+      if (!btn) return;
+      window.addEventListener('scroll', function() {
+        btn.classList.toggle('visible', window.scrollY > 400);
+      }, { passive: true });
+    })();
+  </script>
+
+  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="back.top">↑ TOP</button>
+</body>
+</html>

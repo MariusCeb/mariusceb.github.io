@@ -155,8 +155,8 @@
     }
     /* ── READING PROGRESS ── */
     #reading-progress {
-      position: fixed; top: 0; left: 0; width: 0%; height: 2px;
-      background: var(--fg); z-index: 9999; pointer-events: none;
+      position: absolute; bottom: 0; left: 0; width: 0%; height: 2px;
+      background: var(--fg); pointer-events: none;
       transition: width 0.1s linear;
     }
     /* ── BACK TO TOP ── */
@@ -179,7 +179,6 @@
 </head>
 <body>
 
-  <div id="reading-progress"></div>
   <div id="cursor-dot"></div>
   <div id="cursor-line"></div>
   <div id="pt-overlay" style="position:fixed;inset:0;z-index:99999;display:flex;overflow:hidden;pointer-events:none;background:#111;"></div>
@@ -197,6 +196,7 @@
         <span class="toggle-label" id="toggle-label">DARK</span>
       </button>
     </div>
+    <div id="reading-progress"></div>
   </header>
 
   <main>

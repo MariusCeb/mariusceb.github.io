@@ -85,7 +85,7 @@
       position: fixed; top: 0; left: 0; right: 0; height: 52px;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px; border-bottom: 1px solid var(--border);
-      background: var(--bg); z-index: 100; transition: background 0.4s, border-color 0.4s;
+      background: var(--bg); z-index: 100; transition: background 0.4s, border-color 0.4s; overflow: hidden; -webkit-transform: translateZ(0); transform: translateZ(0);
     }
     .header-left { display: flex; align-items: center; gap: 20px; }
     .back-link { font-size: 10px; letter-spacing: 0.08em; color: var(--muted); text-decoration: none; transition: color 0.2s; }

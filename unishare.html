@@ -565,23 +565,41 @@
     })();
 
     // Lightbox
-    function openLightbox(src) {
-      document.getElementById('lightboxImg').src = src;
+    var _lbImgs = [], _lbIdx = 0;
+    (function() {
+      document.querySelectorAll('.strip-img, .feature-img, .split-photo, .sidebar-photo, .outcome-photo').forEach(function(el) {
+        var src = '';
+        var img = el.querySelector('img');
+        if (img && img.src) { src = img.src; }
+        else { var bg = window.getComputedStyle(el).backgroundImage; var m = bg.match(/url\(["']?([^"')]+)["']?\)/); if (m && m[1]) src = m[1]; }
+        if (src) { _lbImgs.push(src); el.addEventListener('click', (function(s) { return function() { _lbIdx = _lbImgs.indexOf(s); _openLb(); }; })(src)); }
+      });
+    })();
+    function _openLb() {
+      document.getElementById('lightboxImg').src = _lbImgs[_lbIdx];
       document.getElementById('lightbox').classList.add('active');
       document.body.style.overflow = 'hidden';
+      _lbSync();
     }
+    function _lbSync() {
+      var p = document.getElementById('lightboxPrev'), n = document.getElementById('lightboxNext');
+      if (p) _lbIdx > 0 ? p.removeAttribute('disabled') : p.setAttribute('disabled', '');
+      if (n) _lbIdx < _lbImgs.length - 1 ? n.removeAttribute('disabled') : n.setAttribute('disabled', '');
+    }
+    function navigateLightbox(dir) {
+      var i = _lbIdx + dir;
+      if (i >= 0 && i < _lbImgs.length) { _lbIdx = i; document.getElementById('lightboxImg').src = _lbImgs[i]; _lbSync(); }
+    }
+    function openLightbox(src) { _lbIdx = Math.max(0, _lbImgs.indexOf(src)); _openLb(); }
     function closeLightbox() {
       document.getElementById('lightbox').classList.remove('active');
       document.getElementById('lightboxImg').src = '';
       document.body.style.overflow = '';
     }
-    document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeLightbox(); });
-
-    document.querySelectorAll('.strip-img, .feature-img, .sidebar-photo, .outcome-photo').forEach(el => {
-      el.addEventListener('click', function() {
-        const img = this.querySelector('img');
-        if (img && img.src) { openLightbox(img.src); }
-      });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') navigateLightbox(-1);
+      if (e.key === 'ArrowRight') navigateLightbox(1);
     });
     /* ── READING PROGRESS ── */
     (function() {

@@ -444,7 +444,7 @@
       </div>
       <div class="meta-item">
         <div class="meta-label" data-i18n="meta.live">Live Site</div>
-        <div class="meta-value"><a href="https://mariusceb.github.io/fontara" class="meta-link" target="_blank" data-i18n="meta.open_site">Open Site ↗</a></div>
+        <div class="meta-value"><a href="https://fontara.it" class="meta-link" target="_blank" data-i18n="meta.open_site">Open Site ↗</a></div>
       </div>
       <div class="meta-item">
         <div class="meta-label" data-i18n="meta.github">GitHub</div>
@@ -454,10 +454,10 @@
 
     <!-- IMAGE STRIP -->
     <div class="image-strip">
-      <div class="strip-img"></div>
-      <div class="strip-img"></div>
-      <div class="strip-img"></div>
-      <div class="strip-img"></div>
+      <div class="strip-img"><img src="foto/fontara/index-preview.png" alt="Fontara — main app interface with sidebar controls and startup layout preview" loading="lazy"></div>
+      <div class="strip-img"><img src="foto/fontara/index-compare.png" alt="Fontara — compare mode showing two font pairings side by side" loading="lazy"></div>
+      <div class="strip-img"><img src="foto/fontara/layouts-dashboard.png" alt="Fontara — dashboard layout preview with metric cards and data tables" loading="lazy"></div>
+      <div class="strip-img"><img src="foto/fontara/layoutss-typescale.png" alt="Fontara — TypeScale specimen showing H1 through small text at all sizes" loading="lazy"></div>
     </div>
 
     <!-- CONTENT SPLIT -->
@@ -484,8 +484,8 @@
 
       </div>
       <div class="content-split-right">
-        <div class="split-photo split-photo--portrait"></div>
-        <div class="split-photo split-photo--desktop"></div>
+        <div class="split-photo split-photo--portrait"><img src="foto/fontara/phone-view.jpeg" alt="Fontara — mobile view with sidebar drawer and font preview" loading="lazy"></div>
+        <div class="split-photo split-photo--desktop"><img src="foto/fontara/possibility-to-write-onindex.png" alt="Fontara — editable preview text: click to type directly on the canvas" loading="lazy"></div>
       </div>
     </div>
 
@@ -496,12 +496,12 @@
         <h3 data-i18n="fn.f1.ttl">7 Real-World Layout Previews</h3>
         <p data-i18n="fn.f1.dsc">Each of the 7 layouts is a self-contained React component rendering a realistic, content-rich UI context. Startup: a SaaS landing page with hero, subheading, and feature list. Portfolio: a designer's case-study page with header text and project grid. Restaurant: a dark atmospheric layout with a menu section. Article: long-form editorial copy with pull quotes and captions. E-commerce: a product detail page with pricing and description. Dashboard: a SaaS analytics interface with metric cards and data tables. TypeScale: a pure typographic specimen — every heading level (H1–H5), body, and small text rendered together so you can evaluate the full scale relationship at a glance. Switching layouts is instant and keyboard-mapped to keys 1–7. The preview theme (light or dark) toggles independently with D.</p>
       </div>
-      <div class="feature-img"></div>
+      <div class="feature-img"><img src="foto/fontara/layouts-portfolio.png" alt="Fontara — portfolio layout showing heading and body font pairing on a case study page" loading="lazy"></div>
     </div>
 
     <!-- FEATURE ROW 2 — Compare Mode (flipped) -->
     <div class="feature-row reveal" style="animation-delay: 0.52s;">
-      <div class="feature-img"></div>
+      <div class="feature-img"><img src="foto/fontara/index-compare.png" alt="Fontara — compare mode with two independent font pairings rendered side by side" loading="lazy"></div>
       <div class="feature-text">
         <div class="feature-icon"></div>
         <h3 data-i18n="fn.f2.ttl">Compare Mode</h3>
@@ -516,12 +516,12 @@
         <h3 data-i18n="fn.f3.ttl">Typography Controls &amp; Save Pairing</h3>
         <p data-i18n="fn.f3.dsc">Beyond the font pickers, four controls refine the typographic system: Base font size (px), Scale ratio (the multiplier between heading levels — Minor Third 1.2, Major Third 1.25, Perfect Fourth 1.33, Perfect Fifth 1.5, Golden Ratio 1.618), Line height, and Letter spacing for headings and body independently. Fonts with variable axis support expose a Weight slider that moves across the full optical range. The Save pairing button stores the current combination to localStorage under a named slug — duplicates are prevented — and the saved list appears in the sidebar for one-click recall. The Export CSS modal generates a copy-ready snippet: Google Fonts @import, all type levels as CSS custom properties, and a live type scale preview inside the modal showing actual pixel sizes for H1 through small text.</p>
       </div>
-      <div class="feature-img"></div>
+      <div class="feature-img"><img src="foto/fontara/exportcss.png" alt="Fontara — Export CSS modal with syntax-highlighted snippet and type scale preview" loading="lazy"></div>
     </div>
 
     <!-- FEATURE ROW 4 — Keyboard Shortcuts & Share URL (flipped) -->
     <div class="feature-row reveal" style="animation-delay: 0.56s;">
-      <div class="feature-img"></div>
+      <div class="feature-img"><img src="foto/fontara/keyboard-shortcuts.png" alt="Fontara — keyboard shortcuts reference panel listing all key bindings" loading="lazy"></div>
       <div class="feature-text">
         <div class="feature-icon"></div>
         <h3 data-i18n="fn.f4.ttl">Keyboard Shortcuts &amp; Shareable URL</h3>
@@ -541,7 +541,7 @@
         <p data-i18n-html="fn.out.p2">The most interesting technical challenge was the URL state system. Encoding a complete typography configuration — two font names, two weights, five numeric parameters, the current layout, and the viewport — into a URL short enough to actually be shareable required compressing the JSON key names to single characters before base64 encoding. The decode path also needs to be resilient: malformed or truncated hashes must fail silently and fall back to defaults. <strong>The font picker keyboard navigation with live preview on each arrow key press</strong> — loading a new Google Font on every keystroke without lag — required careful debouncing and prioritising fonts that are already cached in the browser.</p>
       </div>
       <div class="outcome-right">
-        <div class="split-photo split-photo--portrait"></div>
+        <div class="split-photo split-photo--portrait"><img src="foto/fontara/phone-preview.png" alt="Fontara — mobile preview view on phone" loading="lazy"></div>
       </div>
     </div>
 

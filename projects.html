@@ -176,7 +176,7 @@
     /* ── PROJECT CARD ── */
     .project-card {
       background: var(--card-bg);
-      aspect-ratio: 4/3;
+      aspect-ratio: 16/9;
       text-decoration: none;
       color: var(--fg);
       display: flex;
@@ -206,11 +206,14 @@
       inset: 0;
       background: var(--card-bg);
       background-size: cover;
-      background-position: center;
-      transition: transform 0.5s ease;
+      background-position: center top;
+      transition: transform 0.5s ease, filter 0.3s ease;
+      filter: brightness(0.75) saturate(0.7);
+      image-rendering: -webkit-optimize-contrast;
     }
     .project-card:hover .card-img {
       transform: scale(1.04);
+      filter: brightness(0.85) saturate(0.85);
     }
 
     /* gradient overlay — sits above image, below text */
@@ -219,9 +222,9 @@
       inset: 0;
       background: linear-gradient(
         to top,
-        rgba(0,0,0,0.78) 0%,
-        rgba(0,0,0,0.30) 55%,
-        rgba(0,0,0,0.06) 100%
+        rgba(0,0,0,0.85) 0%,
+        rgba(0,0,0,0.35) 50%,
+        rgba(0,0,0,0.08) 100%
       );
       z-index: 1;
       transition: opacity 0.3s;
@@ -401,7 +404,7 @@
 
       <!-- 03 — Serenamente -->
       <a href="serenamente.html" class="project-card" data-nav>
-        <div class="card-img" style="background-image: url('foto/thumbnails/serenamente.png'); background-position: left center;"></div>
+        <div class="card-img" style="background-image: url('foto/thumbnails/serenamente.png');"></div>
         <div class="card-gradient"></div>
         <span class="card-num">03</span>
         <div class="card-info">
@@ -437,7 +440,7 @@
 
       <!-- 06 — Flavory -->
       <a href="flavory.html" class="project-card" data-nav>
-        <div class="card-img" style="background-image: url('foto/thumbnails/flavory.png'); background-position: left center;"></div>
+        <div class="card-img" style="background-image: url('foto/thumbnails/flavory.png');"></div>
         <div class="card-gradient"></div>
         <span class="card-num">06</span>
         <div class="card-info">
@@ -449,7 +452,7 @@
 
       <!-- 07 — Fontara -->
       <a href="fontara.html" class="project-card" data-nav>
-        <div class="card-img" style="background-image: url('foto/thumbnails/fontara.png'); background-position: left center;"></div>
+        <div class="card-img" style="background-image: url('foto/thumbnails/fontara.png');"></div>
         <div class="card-gradient"></div>
         <span class="card-num">07</span>
         <div class="card-info">

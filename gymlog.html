@@ -258,18 +258,7 @@
       background: var(--fg); pointer-events: none;
       transition: width 0.1s linear;
     }
-    #back-to-top {
-      position: fixed; bottom: 32px; right: 32px;
-      background: none; border: 1px solid var(--border);
-      color: var(--fg); font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px; letter-spacing: 0.1em;
-      padding: 10px 14px; cursor: pointer;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s, background 0.2s, color 0.4s, border-color 0.4s;
-      z-index: 500;
-    }
-    #back-to-top.visible { opacity: 1; pointer-events: all; }
-    #back-to-top:hover { background: var(--fg); color: var(--bg); }
+
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
     .reveal.in-view { opacity: 1; transform: translateY(0); }
   </style>
@@ -551,7 +540,6 @@
 
   </main>
 
-  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="back.top">↑ TOP</button>
 
   <script src="i18n.js"></script>
   <script>

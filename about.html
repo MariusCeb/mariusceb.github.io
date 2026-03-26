@@ -286,18 +286,8 @@
       transition: width 0.1s linear;
     }
     /* ── BACK TO TOP ── */
-    #back-to-top {
-      position: fixed; bottom: 32px; right: 32px;
-      background: none; border: 1px solid var(--border);
-      color: var(--fg); font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px; letter-spacing: 0.1em;
-      padding: 10px 14px; cursor: pointer;
-      opacity: 0; pointer-events: none;
-      transition: opacity 0.3s, background 0.2s, color 0.4s, border-color 0.4s;
-      z-index: 500;
-    }
-    #back-to-top.visible { opacity: 1; pointer-events: all; }
-    #back-to-top:hover { background: var(--fg); color: var(--bg); }
+
+
     /* ── MARQUEE ── */
     .marquee-strip {
       overflow: hidden; border-bottom: 1px solid var(--border); border-top: 1px solid var(--border);
@@ -599,14 +589,7 @@
         bar.style.width = (t > 0 ? s / t * 100 : 0) + '%';
       }, { passive: true });
     })();
-    /* ── BACK TO TOP ── */
-    (function() {
-      var btn = document.getElementById('back-to-top');
-      if (!btn) return;
-      window.addEventListener('scroll', function() {
-        btn.classList.toggle('visible', window.scrollY > 400);
-      }, { passive: true });
-    })();
+
     /* ── SCROLL REVEAL (process items) ── */
     (function() {
       if (!('IntersectionObserver' in window)) return;
@@ -617,6 +600,5 @@
     })();
   </script>
 
-  <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" data-i18n="back.top">↑ TOP</button>
 </body>
 </html>

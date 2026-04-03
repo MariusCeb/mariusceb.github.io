@@ -160,9 +160,10 @@
     }
     /* ── READING PROGRESS ── */
     #reading-progress {
-      position: absolute; bottom: 0; left: 0; width: 0%; height: 2px;
+      position: absolute; bottom: 0; left: 0; width: 100%; height: 2px;
       background: var(--fg); pointer-events: none;
-      transition: width 0.1s linear;
+      transform: scaleX(0); transform-origin: left center;
+      will-change: transform;
     }
     /* ── BACK TO TOP ── */
     #back-to-top {
@@ -414,9 +415,16 @@
     (function() {
       var bar = document.getElementById('reading-progress');
       if (!bar) return;
+      var ticking = false;
       window.addEventListener('scroll', function() {
-        var s = window.scrollY, t = document.documentElement.scrollHeight - window.innerHeight;
-        bar.style.width = (t > 0 ? s / t * 100 : 0) + '%';
+        if (!ticking) {
+          requestAnimationFrame(function() {
+            var s = window.scrollY, t = document.documentElement.scrollHeight - window.innerHeight;
+            bar.style.transform = 'scaleX(' + (t > 0 ? s / t : 0) + ')';
+            ticking = false;
+          });
+          ticking = true;
+        }
       }, { passive: true });
     })();
     /* ── BACK TO TOP ── */

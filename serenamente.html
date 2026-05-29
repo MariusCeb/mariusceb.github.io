@@ -56,19 +56,6 @@
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
       background-repeat: repeat; background-size: 200px 200px;
     }
-
-    /* ── CUSTOM CURSOR ── */
-    @media (hover: hover) and (pointer: fine) {
-      html, * { cursor: none !important; }
-    }
-    #cursor-dot {
-      position: fixed; left: 0; top: 0;
-      width: 6px; height: 6px;
-      background: var(--fg); border-radius: 50%;
-      pointer-events: none; z-index: 100000;
-      transform: translate(-50%,-50%);
-      box-shadow: 0 0 0 2px var(--bg);
-    }
     #cursor-line {
       position: fixed; left: 0; top: 0;
       width: 1px; height: 26px;
@@ -335,8 +322,6 @@
   </style>
 </head>
 <body>
-
-  <div id="cursor-dot"></div>
   <div id="cursor-line"></div>
   <div id="pt-overlay" style="position:fixed;inset:0;z-index:99999;display:flex;overflow:hidden;pointer-events:none;background:#111;"></div>
   <div class="noise-overlay"></div>
@@ -553,21 +538,12 @@
     /* ── CURSOR ── */
     (function() {
       if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-      var dot = document.getElementById('cursor-dot');
       var line = document.getElementById('cursor-line');
-      if (!dot || !line) return;
+      if (!line) return;
       var mx = -200, my = -200, lx = -200, ly = -200;
       document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
-      var magnets = document.querySelectorAll('a, button');
       (function tick() {
-        var tx = mx, ty = my;
-        for (var i = 0; i < magnets.length; i++) {
-          var r = magnets[i].getBoundingClientRect();
-          var cx = r.left + r.width * 0.5, cy = r.top + r.height * 0.5;
-          var d = Math.sqrt((mx-cx)*(mx-cx)+(my-cy)*(my-cy));
-          if (d < 80) { var s = (1-d/80)*0.28; tx += (cx-mx)*s; ty += (cy-my)*s; }
         }
-        dot.style.left = tx+'px'; dot.style.top = ty+'px';
         lx += (mx-lx)*0.12; ly += (my-ly)*0.12;
         var angle = Math.atan2(my-ly, mx-lx)*180/Math.PI+90;
         line.style.left = lx+'px'; line.style.top = ly+'px';

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
@@ -29,6 +29,7 @@
       --card-hover: #dddbd7;
       --border:     #d5d3cf;
       --line:       #aaa;
+      --subtle:     #bbb;
     }
     [data-theme="dark"] {
       --bg:         #0e0e0e;
@@ -38,6 +39,7 @@
       --card-hover: #222;
       --border:     #2a2a2a;
       --line:       #333;
+      --subtle:     #555;
     }
 
     html, body {
@@ -519,21 +521,6 @@
           setTimeout(function() { overlay.style.pointerEvents = 'none'; }, (DUR+(N-1)*STAGGER)*1000+200);
         }, 50);
       });
-    })();
-    /* ── CURSOR ── */
-    (function() {
-      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-      var line = document.getElementById('cursor-line');
-      if (!line) return;
-      var mx = -200, my = -200, lx = -200, ly = -200;
-      document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
-      (function tick() {
-        lx += (mx-lx)*0.12; ly += (my-ly)*0.12;
-        var angle = Math.atan2(my-ly, mx-lx)*180/Math.PI+90;
-        line.style.left = lx+'px'; line.style.top = ly+'px';
-        line.style.transform = 'translate(-50%,-50%) rotate('+angle+'deg)';
-        requestAnimationFrame(tick);
-      })();
     })();
     /* ── CARD TILT ── */
     (function() {

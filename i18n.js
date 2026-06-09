@@ -12,7 +12,6 @@ const TRANSLATIONS = {
   en: {
 
     /* ── INDEX ──────────────────────────────────────────── */
-    'avail':         'AVAILABLE FOR WORK',
     'nav.projects':  'PROJECTS',
     'nav.about':     'ABOUT ME',
     'nav.contact':   'CONTACT ME',
@@ -86,6 +85,7 @@ const TRANSLATIONS = {
 
     /* ── PROJECTS ───────────────────────────────────────── */
     'proj.pg.label':  '_ PROJECTS',
+    'proj.crumb':     'CEBAN MARIUS / <span>PROJECTS</span>',
     'proj.h1':        'PROJECTS.',
     'proj.subtitle':  'SELECTED WORK',
     'proj.c0.tag':    'Web Design & Development',
@@ -307,7 +307,6 @@ const TRANSLATIONS = {
   it: {
 
     /* ── INDEX ──────────────────────────────────────────── */
-    'avail':         'DISPONIBILE',
     'nav.projects':  'PROGETTI',
     'nav.about':     'CHI SONO',
     'nav.contact':   'CONTATTI',
@@ -381,6 +380,7 @@ const TRANSLATIONS = {
 
     /* ── PROJECTS ───────────────────────────────────────── */
     'proj.pg.label':  '_ PROGETTI',
+    'proj.crumb':     'CEBAN MARIUS / <span>PROGETTI</span>',
     'proj.h1':        'PROGETTI.',
     'proj.subtitle':  'LAVORI SELEZIONATI',
     'proj.c0.tag':    'Web Design & Sviluppo',

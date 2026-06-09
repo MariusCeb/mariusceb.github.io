@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
@@ -23,7 +23,7 @@
     :root {
       --bg:       #f0eeea;
       --fg:       #111;
-      --muted:    #888;
+      --muted:    #555;
       --subtle:   #bbb;
       --border:   #d5d3cf;
       --card-bg:  #e5e3df;
@@ -32,7 +32,7 @@
     [data-theme="dark"] {
       --bg:       #0e0e0e;
       --fg:       #e8e6e1;
-      --muted:    #888;
+      --muted:    #aaa;
       --subtle:   #555;
       --border:   #1e1e1e;
       --card-bg:  #1a1a1a;
@@ -47,13 +47,6 @@
       font-weight: 300;
       line-height: 1.7;
       transition: background 0.4s, color 0.4s;
-    }
-    #cursor-line {
-      position: fixed; left: 0; top: 0;
-      width: 1px; height: 26px;
-      background: var(--fg); opacity: 0.5;
-      pointer-events: none; z-index: 99999;
-      transform: translate(-50%,-50%);
     }
     /* ── META LINK ── */
     .meta-link { color: var(--fg); text-decoration: none; transition: opacity 0.2s; }
@@ -387,7 +380,6 @@
   </style>
 </head>
 <body>
-  <div id="cursor-line"></div>
   <div id="pt-overlay" style="position:fixed;inset:0;z-index:99999;display:flex;overflow:hidden;pointer-events:none;background:#111;"></div>
   <div class="noise-overlay"></div>
 
@@ -622,20 +614,7 @@
         }, 50);
       });
     })();
-    /* ── CURSOR ── */
-    (function() {
-      if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-      var line = document.getElementById('cursor-line');
-      if (!line) return;
-      var mx = -200, my = -200, lx = -200, ly = -200;
-      document.addEventListener('mousemove', function(e) { mx = e.clientX; my = e.clientY; });
-      (function tick() {
-        lx += (mx-lx)*0.12; ly += (my-ly)*0.12;
-        var angle = Math.atan2(my-ly, mx-lx)*180/Math.PI+90;
-        line.style.left = lx+'px'; line.style.top = ly+'px';
-        line.style.transform = 'translate(-50%,-50%) rotate('+angle+'deg)';
-        requestAnimationFrame(tick);
-      })();
+    
     })();
     // Lightbox
     var _lbImgs = [], _lbIdx = 0;

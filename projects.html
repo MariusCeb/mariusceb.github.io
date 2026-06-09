@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
@@ -24,7 +24,7 @@
     :root {
       --bg:         #f0eeea;
       --fg:         #111;
-      --muted:      #888;
+      --muted:      #555;
       --card-bg:    #e5e3df;
       --card-hover: #dddbd7;
       --border:     #d5d3cf;
@@ -33,7 +33,7 @@
     [data-theme="dark"] {
       --bg:         #0e0e0e;
       --fg:         #e8e6e1;
-      --muted:      #888;
+      --muted:      #aaa;
       --card-bg:    #1a1a1a;
       --card-hover: #222;
       --border:     #2a2a2a;
@@ -81,23 +81,15 @@
     .back-link:hover { color: var(--fg); }
     .back-link::before { content: '← '; }
 
-    .site-name {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      color: var(--fg);
+    .breadcrumb {
+      font-size: 10px; letter-spacing: 0.06em; color: var(--subtle);
     }
-    .site-name em { font-style: normal; font-weight: 300; color: var(--muted); }
+    .breadcrumb span { color: var(--fg); }
 
     .header-right {
       display: flex;
       align-items: center;
       gap: 20px;
-    }
-    .page-label {
-      font-size: 9px;
-      letter-spacing: 0.14em;
-      color: var(--muted);
     }
 
     /* ── THEME TOGGLE ── */
@@ -161,7 +153,7 @@
     }
     .page-title p {
       margin-top: 8px;
-      font-size: 10px;
+      font-size: 12px;
       letter-spacing: 0.1em;
       color: var(--muted);
     }
@@ -169,8 +161,8 @@
     /* ── GRID ── */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
     }
 
     /* ── PROJECT CARD ── */
@@ -252,14 +244,14 @@
       z-index: 2;
     }
     .card-tag {
-      font-size: 8px;
+      font-size: 10px;
       letter-spacing: 0.14em;
       color: rgba(255,255,255,0.65);
       margin-bottom: 4px;
       text-transform: uppercase;
     }
     .card-title {
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 400;
       letter-spacing: 0.04em;
       line-height: 1.3;
@@ -306,32 +298,24 @@
         padding: 0 16px;
       }
       .back-link { font-size: 10px; }
-      .site-name { display: none; }
-      .page-label { font-size: 9px; }
+      .breadcrumb { display: none; }
 
       main { padding: 60px 12px 48px; }
 
       .page-title { margin-bottom: 20px; }
       .page-title h1 { font-size: 32px; }
-      .page-title p  { font-size: 9px; }
+      .page-title p  { font-size: 12px; }
 
       .projects-grid {
         grid-template-columns: 1fr;
-        gap: 2px;
+        gap: 20px;
       }
       .project-card {
         aspect-ratio: 16/9;
         padding: 14px;
       }
-      .card-title { font-size: 13px; }
+      .card-title { font-size: 15px; }
       .card-arrow { opacity: 1; transform: none; }
-    }
-    #cursor-line {
-      position: fixed; left: 0; top: 0;
-      width: 1px; height: 26px;
-      background: var(--fg); opacity: 0.5;
-      pointer-events: none; z-index: 99999;
-      transform: translate(-50%,-50%);
     }
     .noise-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; opacity: 0.035; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"); background-repeat: repeat; background-size: 200px 200px; }
     /* ── CARD TILT ── */
@@ -343,17 +327,15 @@
   </style>
 </head>
 <body>
-  <div id="cursor-line"></div>
   <div id="pt-overlay" style="position:fixed;inset:0;z-index:99999;display:flex;overflow:hidden;pointer-events:none;background:#111;"></div>
   <div class="noise-overlay"></div>
 
   <header>
     <div class="header-left">
       <a href="index.html" data-nav class="back-link">HOME</a>
-      <span class="site-name">CEBAN MARIUS <em>__portfolio</em></span>
+      <span class="breadcrumb" data-i18n-html="proj.crumb">CEBAN MARIUS / <span>PROJECTS</span></span>
     </div>
     <div class="header-right">
-      <span class="page-label" data-i18n="proj.pg.label">_ PROJECTS</span>
       <button class="lang-toggle" onclick="toggleLang()" id="lang-toggle-label">IT</button>
       <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
         <div class="toggle-track"><div class="toggle-dot"></div></div>

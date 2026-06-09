@@ -48,20 +48,20 @@
       background: var(--bg); z-index: 100; transition: background 0.4s, border-color 0.4s; overflow: hidden; -webkit-transform: translateZ(0); transform: translateZ(0);
     }
     .header-left { display: flex; align-items: center; gap: 20px; }
-    .back-link { font-size: 10px; letter-spacing: 0.08em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .back-link { font-size: 13px; letter-spacing: 0.08em; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .back-link:hover { color: var(--fg); }
-    .breadcrumb { font-size: 10px; letter-spacing: 0.06em; color: var(--subtle); }
+    .breadcrumb { font-size: 13px; letter-spacing: 0.06em; color: var(--subtle); }
     .breadcrumb span { color: var(--fg); }
     .theme-toggle { background: none; border: none; cursor: pointer; display: flex; align-items: center; gap: 7px; }
     .toggle-track { width: 30px; height: 17px; border-radius: 9px; border: 1px solid var(--line); background: transparent; position: relative; transition: border-color 0.3s; }
     .toggle-dot { position: absolute; top: 3px; left: 3px; width: 9px; height: 9px; border-radius: 50%; background: var(--fg); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), background 0.3s; }
     [data-theme="dark"] .toggle-dot { transform: translateX(13px); }
-    .toggle-label { font-size: 9px; letter-spacing: 0.1em; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
+    .toggle-label { font-size: 12px; letter-spacing: 0.1em; color: var(--muted); font-family: 'IBM Plex Mono', monospace; }
     .header-right { display: flex; align-items: center; gap: 16px; }
     .lang-toggle {
       background: none; border: none; cursor: pointer;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px; letter-spacing: 0.1em;
+      font-size: 12px; letter-spacing: 0.1em;
       color: var(--muted); transition: color 0.2s; padding: 0;
     }
     .lang-toggle:hover { color: var(--fg); }

@@ -45,13 +45,13 @@
     }
     .header-left { display: flex; align-items: center; gap: 20px; }
     .back-link {
-      font-size: 10px; letter-spacing: 0.08em;
+      font-size: 13px; letter-spacing: 0.08em;
       color: var(--muted); text-decoration: none;
       transition: color 0.2s;
     }
     .back-link:hover { color: var(--fg); }
     .breadcrumb {
-      font-size: 10px; letter-spacing: 0.06em; color: var(--subtle);
+      font-size: 13px; letter-spacing: 0.06em; color: var(--subtle);
     }
     .breadcrumb span { color: var(--fg); }
     .theme-toggle {
@@ -71,14 +71,14 @@
     }
     [data-theme="dark"] .toggle-dot { transform: translateX(13px); }
     .toggle-label {
-      font-size: 9px; letter-spacing: 0.1em; color: var(--muted);
+      font-size: 12px; letter-spacing: 0.1em; color: var(--muted);
       font-family: 'IBM Plex Mono', monospace;
     }
     .header-right { display: flex; align-items: center; gap: 16px; }
     .lang-toggle {
       background: none; border: none; cursor: pointer;
       font-family: 'IBM Plex Mono', monospace;
-      font-size: 9px; letter-spacing: 0.1em;
+      font-size: 12px; letter-spacing: 0.1em;
       color: var(--muted); transition: color 0.2s; padding: 0;
     }
     .lang-toggle:hover { color: var(--fg); }
